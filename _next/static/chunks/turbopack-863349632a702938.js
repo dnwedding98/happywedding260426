@@ -13,7 +13,7 @@
     let e;
     if (!Array.isArray(globalThis.TURBOPACK)) return;
     let t = "/_next/",
-        r = (self.TURBOPACK_CHUNK_SUFFIX ?? document?.currentScript?.getAttribute?.("src")?.replace(/^(.*(?=\?)|^.*$)/, "")) || "",
+        r = (self.TURBOPACK_CHUNK_SUFFIX ? ? document ? .currentScript ? .getAttribute ? .("src") ? .replace(/^(.*(?=\?)|^.*$)/, "")) || "",
         n = new WeakMap;
 
     function o(e, t) {
