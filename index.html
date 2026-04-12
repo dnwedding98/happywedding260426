@@ -2297,6 +2297,27 @@
         style="width: 100% !important; height: 100% !important; margin: 0px !important; padding: 0px !important; position: fixed !important; z-index: 0 !important; top: 0px !important; left: 0px !important; pointer-events: none;"
         aria-hidden="true" height="569" width="1905" pointer-events="none"></canvas></div>
   </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var animatedEls = document.querySelectorAll('[data-node-id="u7OcsqielL"], [data-node-id="T5esoe9A3V"], [data-node-id="-QQIe6JsUa"], [data-node-id="52PalJoliu"], [data-node-id="FGyGOa1-ps"], [data-node-id="DvNuQAgCaL"], [data-node-id="pEY7Qxk29B"], [data-node-id="vx5tzdAYd2"], [data-node-id="fxKALb0NXS"], [data-node-id="8SdSOyfr3n"]');
+  
+  animatedEls.forEach(function(el) {
+    el.style.animationPlayState = 'paused';
+  });
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  animatedEls.forEach(function(el) {
+    observer.observe(el);
+  });
+});
+</script>
 </body>
 <en2vi-host class="corom-element" version="3"
   style="all: initial; position: absolute; top: 0; left: 0; right: 0; height: 0; margin: 0; text-align: left; z-index: 10000000000; pointer-events: none; border: none; display: block">
