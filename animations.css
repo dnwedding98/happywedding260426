@@ -227,9 +227,8 @@
 }
 
 [data-node-id="yBfD5g7Lsi"] {
-  animation: slideFromLeft 1.5s ease-out forwards;
+  animation: slideFromBottom 1.5s ease-out forwards;
   opacity: 0;
-  transform-origin: left center;
 }
 
 [data-node-id="MTUOwOzsSV"] {
@@ -306,7 +305,7 @@
     animation-name: slideFromRightMobile;
   }
   [data-node-id="yBfD5g7Lsi"] {
-    animation-name: slideFromLeftMobile;
+    animation-name: slideFromBottomMobile;
   }
   [data-node-id="MTUOwOzsSV"] {
     animation-name: slideFromRightMobile;
