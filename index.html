@@ -2324,6 +2324,318 @@
       });
     });
   </script>
+  <div id="photo-carousel-modal" class="carousel-modal">
+    <div class="carousel-backdrop"></div>
+    <div class="carousel-container">
+      <button class="carousel-close">&times;</button>
+      <button class="carousel-nav carousel-prev">&#10094;</button>
+      <button class="carousel-nav carousel-next">&#10095;</button>
+      <div class="carousel-wrapper">
+        <div class="carousel-slides"></div>
+      </div>
+      <div class="carousel-indicators"></div>
+    </div>
+  </div>
+  <script>
+    const photoGalleryImages = [
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/f5a0f038-b6d3-4c82-b883-06840b9b9f53-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/0a41a4ec-2dfd-495b-a110-feab5ba384e0-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/d2224c8f-4963-4fbf-b320-e1d1847452f3-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/517773d6-1412-4637-a5ce-a51c697f28e8-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/b2d6e5cb-b0a0-4abc-8556-c86606811a89-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/c68b382b-ab92-47d6-a62d-10dd967ae884-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/b31d48b8-4d73-417d-87da-284b74dda661-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/2fddc30b-9563-4c97-b1e5-89e81327727d-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/283df134-da26-4258-81ba-be7809828898-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/2fe6bc84-a4f1-435e-b681-c14a9b06e416-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/78fd3370-5732-4c61-9666-76199d8899a1-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/2459766b-5b82-430d-bec6-b68f6cf201d0-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/81008254-774b-436e-b28a-79fd19250c1b-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/05a5f019-b82a-49c5-93b2-5ad78a60cb4b-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/fbba66dd-0dcd-424c-b0ac-446d340dfa05-full.webp",
+      "https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/b27f55e0-522d-477f-9f41-8e543457b99c-full.webp"
+    ];
+
+    const modal = document.getElementById('photo-carousel-modal');
+    const slidesContainer = modal.querySelector('.carousel-slides');
+    const indicatorsContainer = modal.querySelector('.carousel-indicators');
+    const closeBtn = modal.querySelector('.carousel-close');
+    const prevBtn = modal.querySelector('.carousel-prev');
+    const nextBtn = modal.querySelector('.carousel-next');
+    const backdrop = modal.querySelector('.carousel-backdrop');
+
+    let currentIndex = 0;
+
+    function initCarousel() {
+      slidesContainer.innerHTML = '';
+      indicatorsContainer.innerHTML = '';
+      
+      photoGalleryImages.forEach((src, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide';
+        slide.innerHTML = `<img src="${src}" alt="Photo ${index + 1}">`;
+        slidesContainer.appendChild(slide);
+
+        const indicator = document.createElement('button');
+        indicator.className = 'carousel-indicator';
+        indicator.innerHTML = `<img src="${src}" alt="Thumb ${index + 1}">`;
+        indicator.addEventListener('click', () => goToSlide(index));
+        indicatorsContainer.appendChild(indicator);
+      });
+
+      updateCarousel();
+    }
+
+    function updateCarousel() {
+      const slides = modal.querySelectorAll('.carousel-slide');
+      const indicators = modal.querySelectorAll('.carousel-indicator');
+      
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentIndex);
+      });
+      
+      indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    function goToSlide(index) {
+      currentIndex = index;
+      updateCarousel();
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % photoGalleryImages.length;
+      updateCarousel();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + photoGalleryImages.length) % photoGalleryImages.length;
+      updateCarousel();
+    }
+
+    function openCarousel() {
+      initCarousel();
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCarousel() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    const viewMoreBtn = document.querySelector('[data-node-id="LDQpB9hwOH"]');
+    if (viewMoreBtn) {
+      viewMoreBtn.style.cursor = 'pointer';
+      viewMoreBtn.addEventListener('click', openCarousel);
+    }
+
+    closeBtn.addEventListener('click', closeCarousel);
+    backdrop.addEventListener('click', closeCarousel);
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') closeCarousel();
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
+    });
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const carouselWrapper = modal.querySelector('.carousel-wrapper');
+    carouselWrapper.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    carouselWrapper.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    }
+  </script>
+  <style>
+    .carousel-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-modal.open {
+      display: flex;
+    }
+    .carousel-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+    }
+    .carousel-container {
+      position: relative;
+      width: 90vw;
+      max-width: 1200px;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 32px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      border: none;
+      color: #000;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .carousel-nav:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .carousel-prev { left: -60px; }
+    .carousel-next { right: -60px; }
+    .carousel-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .carousel-slides {
+      display: flex;
+      height: 100%;
+      transition: transform 0.3s ease;
+    }
+    .carousel-slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-slide.active {
+      display: flex;
+    }
+    .carousel-slide img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .carousel-indicators {
+      position: absolute;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 90%;
+    }
+    .carousel-indicator {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.3s, transform 0.2s;
+      padding: 0;
+      background: none;
+    }
+    .carousel-indicator.active {
+      border-color: #fff;
+      transform: scale(1.05);
+    }
+    .carousel-indicator:hover {
+      transform: scale(1.05);
+    }
+    .carousel-indicator img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    @media (max-width: 768px) {
+      .carousel-container {
+        width: 95vw;
+        height: 65vh;
+      }
+      .carousel-nav {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+      }
+      .carousel-prev { left: -45px; }
+      .carousel-next { right: -45px; }
+      .carousel-indicators {
+        bottom: -80px;
+        gap: 6px;
+      }
+      .carousel-indicator {
+        width: 50px;
+        height: 50px;
+      }
+    }
+    @media (max-width: 480px) {
+      .carousel-container {
+        width: 100vw;
+        height: 55vh;
+      }
+      .carousel-nav {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+      }
+      .carousel-prev { left: -38px; }
+      .carousel-next { right: -38px; }
+      .carousel-close {
+        top: -35px;
+        font-size: 28px;
+      }
+      .carousel-indicators {
+        bottom: -70px;
+        gap: 4px;
+      }
+      .carousel-indicator {
+        width: 40px;
+        height: 40px;
+        border-radius: 6px;
+      }
+    }
+  </style>
 </body>
 <en2vi-host class="corom-element" version="3"
   style="all: initial; position: absolute; top: 0; left: 0; right: 0; height: 0; margin: 0; text-align: left; z-index: 10000000000; pointer-events: none; border: none; display: block">
