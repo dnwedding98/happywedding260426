@@ -140,6 +140,65 @@
   opacity: 0;
 }
 
+[data-node-id="4IXaMBoQhX"] {
+  animation: slideFromTop 1.5s ease-out forwards;
+  opacity: 0;
+}
+
+[data-node-id="kW6Hc_iuug"],
+[data-node-id="2b-k0ULfnn"] {
+  animation: slideFromTop 2s ease-out forwards;
+  opacity: 0;
+  animation-delay: 0.3s;
+}
+
+[data-node-id="U7qstrqqa7"],
+[data-node-id="d8_lq6BReM"] {
+  animation: slideFromTop 1.5s ease-out forwards;
+  opacity: 0;
+}
+
+[data-node-id="WOc58LGGxK"],
+[data-node-id="GW13K3fL-X"] {
+  animation: slideFromLeft 1.5s ease-out forwards;
+  opacity: 0;
+  transform-origin: left center;
+}
+
+[data-node-id="m4FSLMikSk"],
+[data-node-id="ztMo62ojhk"] {
+  animation: slideFromRight 1.5s ease-out forwards;
+  opacity: 0;
+  transform-origin: right center;
+}
+
+[data-node-id="N74hEpL4XF"] {
+  animation: slideFromBottom 1.5s ease-out forwards;
+  opacity: 0;
+}
+
+[data-node-id="SfdYTozpcE"] {
+  animation: slideFromTop 1.5s ease-out forwards;
+  opacity: 0;
+}
+
+[data-node-id="m8B5VHj0Um"] {
+  animation: slideFromRight 1.5s ease-out forwards;
+  opacity: 0;
+  transform-origin: right center;
+}
+
+[data-node-id="6EP29-B8KZ"] {
+  animation: slideFromLeft 1.5s ease-out forwards;
+  opacity: 0;
+  transform-origin: left center;
+}
+
+[data-node-id="MVTSwVxsvy"] {
+  animation: slideFromBottom 1.5s ease-out forwards;
+  opacity: 0;
+}
+
 @keyframes slideFromTopMobile {
   0% { transform: translateY(-15vw); opacity: 0; }
   100% { transform: translateY(0); opacity: 1; }
