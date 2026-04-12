@@ -164,6 +164,9 @@
 }
 
 [data-node-id="WOc58LGGxK"],
+[data-node-id="3NFuKB1KfE"],
+[data-node-id="h1mTUwvpQt"],
+[data-node-id="wVcZuO3I5c"],
 [data-node-id="GW13K3fL-X"] {
   animation: slideFromLeft 1.5s ease-out forwards;
   opacity: 0;
@@ -187,7 +190,14 @@
   opacity: 0;
 }
 
-[data-node-id="m8B5VHj0Um"] {
+[data-node-id="m8B5VHj0Um"], 
+[data-node-id="K2aB7JXgJp"],
+[data-node-id="mE-lECnIch"],
+[data-node-id="TC5oQ4YA1r"],
+[data-node-id="Q6FOMeAobP"],
+[data-node-id="qgfSpSpZS4"],
+[data-node-id="tBG5fHKPc9"],
+[data-node-id="wVcZuO3I5c"] {
   animation: slideFromRight 1.5s ease-out forwards;
   opacity: 0;
   transform-origin: right center;
