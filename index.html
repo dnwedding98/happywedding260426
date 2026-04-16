@@ -2575,7 +2575,12 @@
 
     let currentIndex = 0;
 
+    let isCarouselInitialized = false;
+
     function initCarousel() {
+      if (isCarouselInitialized) return;
+      isCarouselInitialized = true;
+      
       slidesContainer.innerHTML = '';
       
       photoGalleryImages.forEach((src, index) => {
