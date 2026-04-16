@@ -1602,7 +1602,7 @@
             }
         }
     </style>
-    <audio id="background-music" loop="" src="public/audio/backgroup.mp3"></audio>
+    <audio id="background-music" loop="" src="public/audio/backgroup.mp3" preload="none"></audio>
     <div id="music-toggle" title="Bật / Tắt nhạc">
         <img id="play-icon" src="icons/play.jpg" alt="Play Icon">
         <img id="pause-icon" src="icons/pause.png" alt="Pause Icon" style="display: none;">
@@ -1756,9 +1756,9 @@
                                 style="position: relative; z-index: 24; width: 380px; height: 100%; margin-left: calc(50% - 190px); margin-right: calc(50% - 190px); min-height: 100px; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 0px 16px; box-sizing: border-box;">
                                 <div class="w-full">
                                     <div class="image-container" data-node-id="T_lkyvhN4P"
-                                        style="width: 458px; height: 458px; position: absolute; top: -70px; left: -40px;">
+                                        eagerstyle="width: 458px; height: 458px; position: absolute; top: -70px; left: -40px;">
                                         <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
-                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                            <img alt="" loading="eager" fetchpriority="high"
                                                 src="public/images/1.jpg"
                                                 style="width: 100%;">
                                         </div>
@@ -2000,13 +2000,14 @@
                                     </div>
                                 </div>
                                 <div class="w-full">
-                                    <div data-node-id="N74hEpL4XF" class=""
+<div data-node-id="N74hEpL4XF" class=""
                                         style="width: 338px; height: 247px; opacity: 1; position: absolute; top: 609px; left: 20px; overflow: hidden;">
                                         <div style="width: 100%; height: 100%; overflow: auto;"><iframe
-                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3779.9832555584712!2d105.68672867565847!3d18.66474736475346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3139cd92da77d61b%3A0x8758d373a8773500!2sSummer%20Vinh%20Convention%20Center!5e0!3m2!1svi!2s!4v1776199270608!5m2!1svi!2s"
+                                                data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3779.9832555584712!2d105.68672867565847!3d18.66474736475346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3139cd92da77d61b%3A0x8758d373a8773500!2sSummer%20Vinh%20Convention%20Center!5e0!3m2!1svi!2s!4v1776199270608!5m2!1svi!s"
                                                 width="808" height="485" style="border:0;" allowfullscreen=""
-                                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                                loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="lazy-iframe"></iframe>
                                         </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -2363,9 +2364,7 @@
                 <div class="w-full"></div>
                 <div class="w-full"></div>
             </div>
-        </div><audio
-            src="https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/audio-templates/78e715d8-2e8d-4e44-a68d-78dcff41ce3b.mp3"
-            preload="auto" loop=""></audio><button class="sc-jJLAfE ednnKl chakra-tooltip__trigger" data-scope="tooltip"
+        </div><button class="sc-jJLAfE ednnKl chakra-tooltip__trigger" data-scope="tooltip"
             data-part="trigger" id="tooltip:_r_3_:trigger" dir="ltr" data-state="closed" style="display: none;"><img alt="Play Icon"
                 class="pointer-events-none" src="icons/play.png" style="display: block;"></button>
     </div>
@@ -2584,8 +2583,31 @@
       photoGalleryImages.forEach((src, index) => {
         const slide = document.createElement('div');
         slide.className = 'carousel-slide';
-        slide.innerHTML = `<img src="${src}" alt="Photo ${index + 1}">`;
+        slide.dataset.index = index;
+        const img = document.createElement('img');
+        img.alt = `Photo ${index + 1}`;
+        img.dataset.src = src;
+        img.className = 'lazy-img';
+        img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+        slide.appendChild(img);
         slidesContainer.appendChild(slide);
+      });
+
+      const lazyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.classList.remove('lazy-img');
+              lazyObserver.unobserve(img);
+            }
+          }
+        });
+      }, { root: slidesContainer, rootMargin: '50px' });
+
+      slidesContainer.querySelectorAll('.lazy-img').forEach(img => {
+        lazyObserver.observe(img);
       });
 
       updateCarousel();
@@ -2667,6 +2689,29 @@
         }
       }
     }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const lazyIframes = document.querySelectorAll('.lazy-iframe');
+      if ('IntersectionObserver' in window) {
+        const iframeObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const iframe = entry.target;
+              if (iframe.dataset.src) {
+                iframe.src = iframe.dataset.src;
+                iframeObserver.unobserve(iframe);
+              }
+            }
+          });
+        }, { rootMargin: '100px' });
+        lazyIframes.forEach(iframe => iframeObserver.observe(iframe));
+      } else {
+        lazyIframes.forEach(iframe => {
+          if (iframe.dataset.src) iframe.src = iframe.dataset.src;
+        });
+      }
+    });
   </script>
   <style>
     .carousel-modal {
@@ -2797,6 +2842,13 @@
       object-fit: contain;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .carousel-slide img.lazy-img {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .carousel-slide img:not(.lazy-img) {
+      opacity: 1;
     }
   </style>
 </body>

@@ -2365,13 +2365,39 @@
     let currentIndex = 0;
 
     function initCarousel() {
+      if (isCarouselInitialized) return;
+      isCarouselInitialized = true;
+      
       slidesContainer.innerHTML = '';
       
       photoGalleryImages.forEach((src, index) => {
         const slide = document.createElement('div');
         slide.className = 'carousel-slide';
-        slide.innerHTML = `<img src="${src}" alt="Photo ${index + 1}">`;
+        slide.dataset.index = index;
+        const img = document.createElement('img');
+        img.alt = `Photo ${index + 1}`;
+        img.dataset.src = src;
+        img.className = 'lazy-img';
+        img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+        slide.appendChild(img);
         slidesContainer.appendChild(slide);
+      });
+
+      const lazyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.classList.remove('lazy-img');
+              lazyObserver.unobserve(img);
+            }
+          }
+        });
+      }, { root: slidesContainer, rootMargin: '50px' });
+
+      slidesContainer.querySelectorAll('.lazy-img').forEach(img => {
+        lazyObserver.observe(img);
       });
 
       updateCarousel();
@@ -2566,6 +2592,13 @@
       object-fit: contain;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .carousel-slide img.lazy-img {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .carousel-slide img:not(.lazy-img) {
+      opacity: 1;
     }
 
   </style>
