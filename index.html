@@ -1659,30 +1659,6 @@
     </script>
     <!-- Attribution (ẩn) -->
     <script src="js/base64.js"></script>
-    <script>
-    // Xử lý preloader
-    window.addEventListener("load", function() {
-        const preloader = document.getElementById("preloader");
-
-        //set invite text
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const inviteParam = urlParams.get('invite');
-        const inviteText = document.getElementById("invite-text");
-        if (inviteParam) {
-            inviteText.textContent = `Trân Trọng Kính Mời: ${decodeCustom(inviteParam)}`;
-        }
-    });
-    // Hàm mở thiệp khi nhấn nút
-    function openCard() {
-        preloader.style.opacity = "0";
-        preloader.style.transition = "opacity 1s ease-in-out";
-        setTimeout(() => {
-            preloader.style.display = "none";
-        }, 1000); // Chờ 1 giây sau khi ẩn preloader
-        document.body.style.overflow = 'auto';
-    }
-    </script>
 </head>
 
 <body class="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__variable antialiased">
@@ -1691,6 +1667,28 @@
         <h2 id="invite-text">Trân Trọng Kính Mời</h2>
         <!-- <div class="spinner">Trân trọng kính mời</div> -->
         <button class="btn" id="openCardBtn" onclick="openCard()">Mở Thiệp</button>
+        <script>
+            // Xử lý preloader
+            const preloader = document.getElementById("preloader");
+
+            //set invite text
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const inviteParam = urlParams.get('invite');
+            const inviteText = document.getElementById("invite-text");
+            if (inviteParam) {
+                inviteText.textContent = `Trân Trọng Kính Mời: ${decodeCustom(inviteParam)}`;
+            }
+            // Hàm mở thiệp khi nhấn nút
+            function openCard() {
+                preloader.style.opacity = "0";
+                preloader.style.transition = "opacity 1s ease-in-out";
+                setTimeout(() => {
+                    preloader.style.display = "none";
+                }, 1000); // Chờ 1 giây sau khi ẩn preloader
+                document.body.style.overflow = 'auto';
+            }
+    </script>
     </div> 
     <div data-scope="toast" data-part="group" dir="ltr" tabindex="-1" aria-label="bottom-end Notifications alt+T"
         id="toast-group:bottom-end" data-placement="bottom-end" data-side="bottom" data-align="end" aria-live="polite"
