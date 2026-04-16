@@ -1,0 +1,2803 @@
+<html lang="vi" translate="no" class="light"
+    style="color-scheme: light; --color-primary: #10B981; --color-secondary: #ECFDF5; --color-accent: #F59E0B; --color-background: #FFFFFF; --color-text: #1F2937; --color-textLight: #6B7280;">
+
+<head>
+    <style>
+        body {
+            transition: opacity ease-in 0.2s;
+        }
+
+        body[unresolved] {
+            opacity: 0;
+            display: block;
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+    <style type="text/css">
+        :root {
+            --toastify-color-light: #fff;
+            --toastify-color-dark: #121212;
+            --toastify-color-info: #3498db;
+            --toastify-color-success: #07bc0c;
+            --toastify-color-warning: #f1c40f;
+            --toastify-color-error: hsl(6, 78%, 57%);
+            --toastify-color-transparent: rgba(255, 255, 255, .7);
+            --toastify-icon-color-info: var(--toastify-color-info);
+            --toastify-icon-color-success: var(--toastify-color-success);
+            --toastify-icon-color-warning: var(--toastify-color-warning);
+            --toastify-icon-color-error: var(--toastify-color-error);
+            --toastify-container-width: fit-content;
+            --toastify-toast-width: 320px;
+            --toastify-toast-offset: 16px;
+            --toastify-toast-top: max(var(--toastify-toast-offset), env(safe-area-inset-top));
+            --toastify-toast-right: max(var(--toastify-toast-offset), env(safe-area-inset-right));
+            --toastify-toast-left: max(var(--toastify-toast-offset), env(safe-area-inset-left));
+            --toastify-toast-bottom: max(var(--toastify-toast-offset), env(safe-area-inset-bottom));
+            --toastify-toast-background: #fff;
+            --toastify-toast-padding: 14px;
+            --toastify-toast-min-height: 64px;
+            --toastify-toast-max-height: 800px;
+            --toastify-toast-bd-radius: 6px;
+            --toastify-toast-shadow: 0px 4px 12px rgba(0, 0, 0, .1);
+            --toastify-font-family: sans-serif;
+            --toastify-z-index: 9999;
+            --toastify-text-color-light: #757575;
+            --toastify-text-color-dark: #fff;
+            --toastify-text-color-info: #fff;
+            --toastify-text-color-success: #fff;
+            --toastify-text-color-warning: #fff;
+            --toastify-text-color-error: #fff;
+            --toastify-spinner-color: #616161;
+            --toastify-spinner-color-empty-area: #e0e0e0;
+            --toastify-color-progress-light: linear-gradient(to right, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55);
+            --toastify-color-progress-dark: #bb86fc;
+            --toastify-color-progress-info: var(--toastify-color-info);
+            --toastify-color-progress-success: var(--toastify-color-success);
+            --toastify-color-progress-warning: var(--toastify-color-warning);
+            --toastify-color-progress-error: var(--toastify-color-error);
+            --toastify-color-progress-bgo: .2
+        }
+
+        .Toastify__toast-container {
+            z-index: var(--toastify-z-index);
+            -webkit-transform: translate3d(0, 0, var(--toastify-z-index));
+            position: fixed;
+            width: var(--toastify-container-width);
+            box-sizing: border-box;
+            color: #fff;
+            display: flex;
+            flex-direction: column
+        }
+
+        .Toastify__toast-container--top-left {
+            top: var(--toastify-toast-top);
+            left: var(--toastify-toast-left)
+        }
+
+        .Toastify__toast-container--top-center {
+            top: var(--toastify-toast-top);
+            left: 50%;
+            transform: translate(-50%);
+            align-items: center
+        }
+
+        .Toastify__toast-container--top-right {
+            top: var(--toastify-toast-top);
+            right: var(--toastify-toast-right);
+            align-items: end
+        }
+
+        .Toastify__toast-container--bottom-left {
+            bottom: var(--toastify-toast-bottom);
+            left: var(--toastify-toast-left)
+        }
+
+        .Toastify__toast-container--bottom-center {
+            bottom: var(--toastify-toast-bottom);
+            left: 50%;
+            transform: translate(-50%);
+            align-items: center
+        }
+
+        .Toastify__toast-container--bottom-right {
+            bottom: var(--toastify-toast-bottom);
+            right: var(--toastify-toast-right);
+            align-items: end
+        }
+
+        .Toastify__toast {
+            --y: 0;
+            position: relative;
+            touch-action: none;
+            width: var(--toastify-toast-width);
+            min-height: var(--toastify-toast-min-height);
+            box-sizing: border-box;
+            margin-bottom: 1rem;
+            padding: var(--toastify-toast-padding);
+            border-radius: var(--toastify-toast-bd-radius);
+            box-shadow: var(--toastify-toast-shadow);
+            max-height: var(--toastify-toast-max-height);
+            font-family: var(--toastify-font-family);
+            z-index: 0;
+            display: flex;
+            flex: 1 auto;
+            align-items: center;
+            word-break: break-word
+        }
+
+        @media only screen and (max-width: 480px) {
+            .Toastify__toast-container {
+                width: 100vw;
+                left: env(safe-area-inset-left);
+                margin: 0
+            }
+
+            .Toastify__toast-container--top-left,
+            .Toastify__toast-container--top-center,
+            .Toastify__toast-container--top-right {
+                top: env(safe-area-inset-top);
+                transform: translate(0)
+            }
+
+            .Toastify__toast-container--bottom-left,
+            .Toastify__toast-container--bottom-center,
+            .Toastify__toast-container--bottom-right {
+                bottom: env(safe-area-inset-bottom);
+                transform: translate(0)
+            }
+
+            .Toastify__toast-container--rtl {
+                right: env(safe-area-inset-right);
+                left: initial
+            }
+
+            .Toastify__toast {
+                --toastify-toast-width: 100%;
+                margin-bottom: 0;
+                border-radius: 0
+            }
+        }
+
+        .Toastify__toast-container[data-stacked=true] {
+            width: var(--toastify-toast-width)
+        }
+
+        .Toastify__toast--stacked {
+            position: absolute;
+            width: 100%;
+            transform: translate3d(0, var(--y), 0) scale(var(--s));
+            transition: transform .3s
+        }
+
+        .Toastify__toast--stacked[data-collapsed] .Toastify__toast-body,
+        .Toastify__toast--stacked[data-collapsed] .Toastify__close-button {
+            transition: opacity .1s
+        }
+
+        .Toastify__toast--stacked[data-collapsed=false] {
+            overflow: visible
+        }
+
+        .Toastify__toast--stacked[data-collapsed=true]:not(:last-child)>* {
+            opacity: 0
+        }
+
+        .Toastify__toast--stacked:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: calc(var(--g) * 1px);
+            bottom: 100%
+        }
+
+        .Toastify__toast--stacked[data-pos=top] {
+            top: 0
+        }
+
+        .Toastify__toast--stacked[data-pos=bot] {
+            bottom: 0
+        }
+
+        .Toastify__toast--stacked[data-pos=bot].Toastify__toast--stacked:before {
+            transform-origin: top
+        }
+
+        .Toastify__toast--stacked[data-pos=top].Toastify__toast--stacked:before {
+            transform-origin: bottom
+        }
+
+        .Toastify__toast--stacked:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            transform: scaleY(3);
+            z-index: -1
+        }
+
+        .Toastify__toast--rtl {
+            direction: rtl
+        }
+
+        .Toastify__toast--close-on-click {
+            cursor: pointer
+        }
+
+        .Toastify__toast-icon {
+            margin-inline-end: 10px;
+            width: 22px;
+            flex-shrink: 0;
+            display: flex
+        }
+
+        .Toastify--animate {
+            animation-fill-mode: both;
+            animation-duration: .5s
+        }
+
+        .Toastify--animate-icon {
+            animation-fill-mode: both;
+            animation-duration: .3s
+        }
+
+        .Toastify__toast-theme--dark {
+            background: var(--toastify-color-dark);
+            color: var(--toastify-text-color-dark)
+        }
+
+        .Toastify__toast-theme--light,
+        .Toastify__toast-theme--colored.Toastify__toast--default {
+            background: var(--toastify-color-light);
+            color: var(--toastify-text-color-light)
+        }
+
+        .Toastify__toast-theme--colored.Toastify__toast--info {
+            color: var(--toastify-text-color-info);
+            background: var(--toastify-color-info)
+        }
+
+        .Toastify__toast-theme--colored.Toastify__toast--success {
+            color: var(--toastify-text-color-success);
+            background: var(--toastify-color-success)
+        }
+
+        .Toastify__toast-theme--colored.Toastify__toast--warning {
+            color: var(--toastify-text-color-warning);
+            background: var(--toastify-color-warning)
+        }
+
+        .Toastify__toast-theme--colored.Toastify__toast--error {
+            color: var(--toastify-text-color-error);
+            background: var(--toastify-color-error)
+        }
+
+        .Toastify__progress-bar-theme--light {
+            background: var(--toastify-color-progress-light)
+        }
+
+        .Toastify__progress-bar-theme--dark {
+            background: var(--toastify-color-progress-dark)
+        }
+
+        .Toastify__progress-bar--info {
+            background: var(--toastify-color-progress-info)
+        }
+
+        .Toastify__progress-bar--success {
+            background: var(--toastify-color-progress-success)
+        }
+
+        .Toastify__progress-bar--warning {
+            background: var(--toastify-color-progress-warning)
+        }
+
+        .Toastify__progress-bar--error {
+            background: var(--toastify-color-progress-error)
+        }
+
+        .Toastify__progress-bar-theme--colored.Toastify__progress-bar--info,
+        .Toastify__progress-bar-theme--colored.Toastify__progress-bar--success,
+        .Toastify__progress-bar-theme--colored.Toastify__progress-bar--warning,
+        .Toastify__progress-bar-theme--colored.Toastify__progress-bar--error {
+            background: var(--toastify-color-transparent)
+        }
+
+        .Toastify__close-button {
+            color: #fff;
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: transparent;
+            outline: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            opacity: .7;
+            transition: .3s ease;
+            z-index: 1
+        }
+
+        .Toastify__toast--rtl .Toastify__close-button {
+            left: 6px;
+            right: unset
+        }
+
+        .Toastify__close-button--light {
+            color: #000;
+            opacity: .3
+        }
+
+        .Toastify__close-button>svg {
+            fill: currentColor;
+            height: 16px;
+            width: 14px
+        }
+
+        .Toastify__close-button:hover,
+        .Toastify__close-button:focus {
+            opacity: 1
+        }
+
+        @keyframes Toastify__trackProgress {
+            0% {
+                transform: scaleX(1)
+            }
+
+            to {
+                transform: scaleX(0)
+            }
+        }
+
+        .Toastify__progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: .7;
+            transform-origin: left
+        }
+
+        .Toastify__progress-bar--animated {
+            animation: Toastify__trackProgress linear 1 forwards
+        }
+
+        .Toastify__progress-bar--controlled {
+            transition: transform .2s
+        }
+
+        .Toastify__progress-bar--rtl {
+            right: 0;
+            left: initial;
+            transform-origin: right;
+            border-bottom-left-radius: initial
+        }
+
+        .Toastify__progress-bar--wrp {
+            position: absolute;
+            overflow: hidden;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            border-bottom-left-radius: var(--toastify-toast-bd-radius);
+            border-bottom-right-radius: var(--toastify-toast-bd-radius)
+        }
+
+        .Toastify__progress-bar--wrp[data-hidden=true] {
+            opacity: 0
+        }
+
+        .Toastify__progress-bar--bg {
+            opacity: var(--toastify-color-progress-bgo);
+            width: 100%;
+            height: 100%
+        }
+
+        .Toastify__spinner {
+            width: 20px;
+            height: 20px;
+            box-sizing: border-box;
+            border: 2px solid;
+            border-radius: 100%;
+            border-color: var(--toastify-spinner-color-empty-area);
+            border-right-color: var(--toastify-spinner-color);
+            animation: Toastify__spin .65s linear infinite
+        }
+
+        @keyframes Toastify__bounceInRight {
+
+            0%,
+            60%,
+            75%,
+            90%,
+            to {
+                animation-timing-function: cubic-bezier(.215, .61, .355, 1)
+            }
+
+            0% {
+                opacity: 0;
+                transform: translate3d(3000px, 0, 0)
+            }
+
+            60% {
+                opacity: 1;
+                transform: translate3d(-25px, 0, 0)
+            }
+
+            75% {
+                transform: translate3d(10px, 0, 0)
+            }
+
+            90% {
+                transform: translate3d(-5px, 0, 0)
+            }
+
+            to {
+                transform: none
+            }
+        }
+
+        @keyframes Toastify__bounceOutRight {
+            20% {
+                opacity: 1;
+                transform: translate3d(-20px, var(--y), 0)
+            }
+
+            to {
+                opacity: 0;
+                transform: translate3d(2000px, var(--y), 0)
+            }
+        }
+
+        @keyframes Toastify__bounceInLeft {
+
+            0%,
+            60%,
+            75%,
+            90%,
+            to {
+                animation-timing-function: cubic-bezier(.215, .61, .355, 1)
+            }
+
+            0% {
+                opacity: 0;
+                transform: translate3d(-3000px, 0, 0)
+            }
+
+            60% {
+                opacity: 1;
+                transform: translate3d(25px, 0, 0)
+            }
+
+            75% {
+                transform: translate3d(-10px, 0, 0)
+            }
+
+            90% {
+                transform: translate3d(5px, 0, 0)
+            }
+
+            to {
+                transform: none
+            }
+        }
+
+        @keyframes Toastify__bounceOutLeft {
+            20% {
+                opacity: 1;
+                transform: translate3d(20px, var(--y), 0)
+            }
+
+            to {
+                opacity: 0;
+                transform: translate3d(-2000px, var(--y), 0)
+            }
+        }
+
+        @keyframes Toastify__bounceInUp {
+
+            0%,
+            60%,
+            75%,
+            90%,
+            to {
+                animation-timing-function: cubic-bezier(.215, .61, .355, 1)
+            }
+
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 3000px, 0)
+            }
+
+            60% {
+                opacity: 1;
+                transform: translate3d(0, -20px, 0)
+            }
+
+            75% {
+                transform: translate3d(0, 10px, 0)
+            }
+
+            90% {
+                transform: translate3d(0, -5px, 0)
+            }
+
+            to {
+                transform: translateZ(0)
+            }
+        }
+
+        @keyframes Toastify__bounceOutUp {
+            20% {
+                transform: translate3d(0, calc(var(--y) - 10px), 0)
+            }
+
+            40%,
+            45% {
+                opacity: 1;
+                transform: translate3d(0, calc(var(--y) + 20px), 0)
+            }
+
+            to {
+                opacity: 0;
+                transform: translate3d(0, -2000px, 0)
+            }
+        }
+
+        @keyframes Toastify__bounceInDown {
+
+            0%,
+            60%,
+            75%,
+            90%,
+            to {
+                animation-timing-function: cubic-bezier(.215, .61, .355, 1)
+            }
+
+            0% {
+                opacity: 0;
+                transform: translate3d(0, -3000px, 0)
+            }
+
+            60% {
+                opacity: 1;
+                transform: translate3d(0, 25px, 0)
+            }
+
+            75% {
+                transform: translate3d(0, -10px, 0)
+            }
+
+            90% {
+                transform: translate3d(0, 5px, 0)
+            }
+
+            to {
+                transform: none
+            }
+        }
+
+        @keyframes Toastify__bounceOutDown {
+            20% {
+                transform: translate3d(0, calc(var(--y) - 10px), 0)
+            }
+
+            40%,
+            45% {
+                opacity: 1;
+                transform: translate3d(0, calc(var(--y) + 20px), 0)
+            }
+
+            to {
+                opacity: 0;
+                transform: translate3d(0, 2000px, 0)
+            }
+        }
+
+        .Toastify__bounce-enter--top-left,
+        .Toastify__bounce-enter--bottom-left {
+            animation-name: Toastify__bounceInLeft
+        }
+
+        .Toastify__bounce-enter--top-right,
+        .Toastify__bounce-enter--bottom-right {
+            animation-name: Toastify__bounceInRight
+        }
+
+        .Toastify__bounce-enter--top-center {
+            animation-name: Toastify__bounceInDown
+        }
+
+        .Toastify__bounce-enter--bottom-center {
+            animation-name: Toastify__bounceInUp
+        }
+
+        .Toastify__bounce-exit--top-left,
+        .Toastify__bounce-exit--bottom-left {
+            animation-name: Toastify__bounceOutLeft
+        }
+
+        .Toastify__bounce-exit--top-right,
+        .Toastify__bounce-exit--bottom-right {
+            animation-name: Toastify__bounceOutRight
+        }
+
+        .Toastify__bounce-exit--top-center {
+            animation-name: Toastify__bounceOutUp
+        }
+
+        .Toastify__bounce-exit--bottom-center {
+            animation-name: Toastify__bounceOutDown
+        }
+
+        @keyframes Toastify__zoomIn {
+            0% {
+                opacity: 0;
+                transform: scale3d(.3, .3, .3)
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        @keyframes Toastify__zoomOut {
+            0% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: 0;
+                transform: translate3d(0, var(--y), 0) scale3d(.3, .3, .3)
+            }
+
+            to {
+                opacity: 0
+            }
+        }
+
+        .Toastify__zoom-enter {
+            animation-name: Toastify__zoomIn
+        }
+
+        .Toastify__zoom-exit {
+            animation-name: Toastify__zoomOut
+        }
+
+        @keyframes Toastify__flipIn {
+            0% {
+                transform: perspective(400px) rotateX(90deg);
+                animation-timing-function: ease-in;
+                opacity: 0
+            }
+
+            40% {
+                transform: perspective(400px) rotateX(-20deg);
+                animation-timing-function: ease-in
+            }
+
+            60% {
+                transform: perspective(400px) rotateX(10deg);
+                opacity: 1
+            }
+
+            80% {
+                transform: perspective(400px) rotateX(-5deg)
+            }
+
+            to {
+                transform: perspective(400px)
+            }
+        }
+
+        @keyframes Toastify__flipOut {
+            0% {
+                transform: translate3d(0, var(--y), 0) perspective(400px)
+            }
+
+            30% {
+                transform: translate3d(0, var(--y), 0) perspective(400px) rotateX(-20deg);
+                opacity: 1
+            }
+
+            to {
+                transform: translate3d(0, var(--y), 0) perspective(400px) rotateX(90deg);
+                opacity: 0
+            }
+        }
+
+        .Toastify__flip-enter {
+            animation-name: Toastify__flipIn
+        }
+
+        .Toastify__flip-exit {
+            animation-name: Toastify__flipOut
+        }
+
+        @keyframes Toastify__slideInRight {
+            0% {
+                transform: translate3d(110%, 0, 0);
+                visibility: visible
+            }
+
+            to {
+                transform: translate3d(0, var(--y), 0)
+            }
+        }
+
+        @keyframes Toastify__slideInLeft {
+            0% {
+                transform: translate3d(-110%, 0, 0);
+                visibility: visible
+            }
+
+            to {
+                transform: translate3d(0, var(--y), 0)
+            }
+        }
+
+        @keyframes Toastify__slideInUp {
+            0% {
+                transform: translate3d(0, 110%, 0);
+                visibility: visible
+            }
+
+            to {
+                transform: translate3d(0, var(--y), 0)
+            }
+        }
+
+        @keyframes Toastify__slideInDown {
+            0% {
+                transform: translate3d(0, -110%, 0);
+                visibility: visible
+            }
+
+            to {
+                transform: translate3d(0, var(--y), 0)
+            }
+        }
+
+        @keyframes Toastify__slideOutRight {
+            0% {
+                transform: translate3d(0, var(--y), 0)
+            }
+
+            to {
+                visibility: hidden;
+                transform: translate3d(110%, var(--y), 0)
+            }
+        }
+
+        @keyframes Toastify__slideOutLeft {
+            0% {
+                transform: translate3d(0, var(--y), 0)
+            }
+
+            to {
+                visibility: hidden;
+                transform: translate3d(-110%, var(--y), 0)
+            }
+        }
+
+        @keyframes Toastify__slideOutDown {
+            0% {
+                transform: translate3d(0, var(--y), 0)
+            }
+
+            to {
+                visibility: hidden;
+                transform: translate3d(0, 500px, 0)
+            }
+        }
+
+        @keyframes Toastify__slideOutUp {
+            0% {
+                transform: translate3d(0, var(--y), 0)
+            }
+
+            to {
+                visibility: hidden;
+                transform: translate3d(0, -500px, 0)
+            }
+        }
+
+        .Toastify__slide-enter--top-left,
+        .Toastify__slide-enter--bottom-left {
+            animation-name: Toastify__slideInLeft
+        }
+
+        .Toastify__slide-enter--top-right,
+        .Toastify__slide-enter--bottom-right {
+            animation-name: Toastify__slideInRight
+        }
+
+        .Toastify__slide-enter--top-center {
+            animation-name: Toastify__slideInDown
+        }
+
+        .Toastify__slide-enter--bottom-center {
+            animation-name: Toastify__slideInUp
+        }
+
+        .Toastify__slide-exit--top-left,
+        .Toastify__slide-exit--bottom-left {
+            animation-name: Toastify__slideOutLeft;
+            animation-timing-function: ease-in;
+            animation-duration: .3s
+        }
+
+        .Toastify__slide-exit--top-right,
+        .Toastify__slide-exit--bottom-right {
+            animation-name: Toastify__slideOutRight;
+            animation-timing-function: ease-in;
+            animation-duration: .3s
+        }
+
+        .Toastify__slide-exit--top-center {
+            animation-name: Toastify__slideOutUp;
+            animation-timing-function: ease-in;
+            animation-duration: .3s
+        }
+
+        .Toastify__slide-exit--bottom-center {
+            animation-name: Toastify__slideOutDown;
+            animation-timing-function: ease-in;
+            animation-duration: .3s
+        }
+
+        @keyframes Toastify__spin {
+            0% {
+                transform: rotate(0)
+            }
+
+            to {
+                transform: rotate(360deg)
+            }
+        }
+    </style>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var animatedEls = document.querySelectorAll(
+        '[data-node-id="T5esoe9A3V"], [data-node-id="-QQIe6JsUa"], [data-node-id="52PalJoliu"], [data-node-id="FGyGOa1-ps"], [data-node-id="DvNuQAgCaL"], [data-node-id="pEY7Qxk29B"], [data-node-id="vx5tzdAYd2"], [data-node-id="fxKALb0NXS"], [data-node-id="8SdSOyfr3n"], [data-node-id="4IXaMBoQhX"], [data-node-id="kW6Hc_iuug"], [data-node-id="2b-k0ULfnn"], [data-node-id="U7qstrqqa7"], [data-node-id="d8_lq6BReM"], [data-node-id="WOc58LGGxK"], [data-node-id="GW13K3fL-X"], [data-node-id="m4FSLMikSk"], [data-node-id="ztMo62ojhk"], [data-node-id="N74hEpL4XF"], [data-node-id="SfdYTozpcE"], [data-node-id="m8B5VHj0Um"], [data-node-id="6EP29-B8KZ"], [data-node-id="MVTSwVxsvy"], [data-node-id="3NFuKB1KfE"], [data-node-id="h1mTUwvpQt"], [data-node-id="wVcZuO3I5c"], [data-node-id="K2aB7JXgJp"], [data-node-id="mE-lECnIch"], [data-node-id="TC5oQ4YA1r"], [data-node-id="Q6FOMeAobP"], [data-node-id="qgfSpSpZS4"], [data-node-id="tBG5fHKPc9"], [data-node-id="yBfD5g7Lsi"], [data-node-id="w0eOQLCTI6"], [data-node-id="MTUOwOzsSV"], [data-node-id="Ow7TgXjQn3"], [data-node-id="dFK7O82b93"], [data-node-id="o4HT-G00Pt"], [data-node-id="zi-Y9h7VkA"], [data-node-id="qIHKlKNYtO"], [data-node-id="XBN_irFwSa"], [data-node-id="KjWuWAtxwG"]'
+        );
+
+      animatedEls.forEach(function (el) {
+        el.style.animationPlayState = 'paused';
+      });
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      animatedEls.forEach(function (el) {
+        observer.observe(el);
+      });
+    });
+  </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="8cfc6419583a9bc9.css" data-precedence="next">
+    <link rel="stylesheet" href="de484d2267b3ae95.css" data-precedence="next">
+    <link rel="preload" href="de484d2267b3ae95.css" as="style">
+    <meta name="next-size-adjust" content="">
+    <title>Trọng Dương ❤️ Hồng Nhung</title>
+    <meta name="description" content="Đám cưới của chúng tôi sẽ trọn vẹn và ý nghĩa khi có sự hiện diện và chúc phúc của quý vị!">
+    <meta name="keywords" content="Trọng Dương ❤️ Hồng Nhung">
+    <meta name="facebook-domain-verification" content="efusnh51ynunusfuvpwohhcfc1rjow">
+    <meta property="fb:app_id" content="623409563835717">
+    <meta property="og:title" content="Trọng Dương ❤️ Hồng Nhung">
+    <meta property="og:description" content="Đám cưới của chúng tôi sẽ trọn vẹn và ý nghĩa khi có sự hiện diện và chúc phúc của quý vị!">
+    <meta property="og:image"
+        content="public/images/1.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Trọng Dương ❤️ Hồng Nhung">
+    <meta name="twitter:description" content="Đám cưới của chúng tôi sẽ trọn vẹn và ý nghĩa khi có sự hiện diện và chúc phúc của quý vị!">
+    <meta name="twitter:image" content="public/images/1.jpg">
+    <link rel="icon" href="favicon.ico?favicon.f573fbb1.ico" sizes="256x256" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" href="public/images/wedding.ico" />
+    <link rel="shortcut icon" href="https://dnwedding98.github.io/happywedding260426/public/images/meta.jpg" />
+    <link rel="apple-touch-icon" href="https://dnwedding98.github.io/happywedding260426/public/images/meta.jpg" />
+    <link rel="apple-touch-icon-precomposed" href="https://dnwedding98.github.io/happywedding260426/public/images/meta.jpg" />
+    <meta name="msapplication-TileImage" content="https://dnwedding98.github.io/happywedding260426/public/images/meta.jpg" />
+    <script>
+        (self.__next_s = self.__next_s || []).push([0, {
+            "children": "\n            (function () {\n              if (typeof globalThis.structuredClone === \"function\") {\n                return;\n              }\n\n              function cloneValue(value, seen) {\n                if (value === null || typeof value !== \"object\") {\n                  return value;\n                }\n\n                if (seen.has(value)) {\n                  return seen.get(value);\n                }\n\n                if (value instanceof Date) {\n                  return new Date(value.getTime());\n                }\n\n                if (value instanceof RegExp) {\n                  return new RegExp(value.source, value.flags);\n                }\n\n                if (value instanceof ArrayBuffer) {\n                  return value.slice(0);\n                }\n\n                if (typeof DataView !== \"undefined\" && value instanceof DataView) {\n                  var clonedBuffer = cloneValue(value.buffer, seen);\n                  return new DataView(clonedBuffer, value.byteOffset, value.byteLength);\n                }\n\n                if (ArrayBuffer.isView(value)) {\n                  return value.slice ? value.slice(0) : new value.constructor(value);\n                }\n\n                if (value instanceof Map) {\n                  var clonedMap = new Map();\n                  seen.set(value, clonedMap);\n                  value.forEach(function (mapValue, mapKey) {\n                    clonedMap.set(cloneValue(mapKey, seen), cloneValue(mapValue, seen));\n                  });\n                  return clonedMap;\n                }\n\n                if (value instanceof Set) {\n                  var clonedSet = new Set();\n                  seen.set(value, clonedSet);\n                  value.forEach(function (setValue) {\n                    clonedSet.add(cloneValue(setValue, seen));\n                  });\n                  return clonedSet;\n                }\n\n                if (Array.isArray(value)) {\n                  var clonedArray = [];\n                  seen.set(value, clonedArray);\n                  for (var i = 0; i < value.length; i += 1) {\n                    clonedArray[i] = cloneValue(value[i], seen);\n                  }\n                  return clonedArray;\n                }\n\n                var prototype = Object.getPrototypeOf(value);\n                var clonedObject = Object.create(prototype);\n                seen.set(value, clonedObject);\n\n                Reflect.ownKeys(value).forEach(function (key) {\n                  var descriptor = Object.getOwnPropertyDescriptor(value, key);\n                  if (!descriptor) {\n                    return;\n                  }\n                  if (\"value\" in descriptor) {\n                    descriptor.value = cloneValue(descriptor.value, seen);\n                  }\n                  Object.defineProperty(clonedObject, key, descriptor);\n                });\n\n                return clonedObject;\n              }\n\n              globalThis.structuredClone = function (value) {\n                return cloneValue(value, new WeakMap());\n              };\n            })();\n          ",
+            "id": "structured-clone-polyfill"
+        }])
+    </script>
+    <meta name="sentry-trace" content="b5f1ea9fc73251259436edcd6f51fe78-1a1ad951e0415b0c-1">
+    <meta name="baggage"
+        content="sentry-environment=production,sentry-public_key=8c1eab5a1f8e4addabaf2c50007aa385,sentry-trace_id=b5f1ea9fc73251259436edcd6f51fe78,sentry-org_id=4510973320298496,sentry-transaction=GET%20%2Fmain%2Fview%2Ftemplate%2F%5Bid%5D,sentry-sampled=true,sentry-sample_rand=0.7433063113971667,sentry-sample_rate=1">
+    <script id="structured-clone-polyfill">
+        (function () {
+            if (typeof globalThis.structuredClone === "function") {
+                return;
+            }
+
+            function cloneValue(value, seen) {
+                if (value === null || typeof value !== "object") {
+                    return value;
+                }
+
+                if (seen.has(value)) {
+                    return seen.get(value);
+                }
+
+                if (value instanceof Date) {
+                    return new Date(value.getTime());
+                }
+
+                if (value instanceof RegExp) {
+                    return new RegExp(value.source, value.flags);
+                }
+
+                if (value instanceof ArrayBuffer) {
+                    return value.slice(0);
+                }
+
+                if (typeof DataView !== "undefined" && value instanceof DataView) {
+                    var clonedBuffer = cloneValue(value.buffer, seen);
+                    return new DataView(clonedBuffer, value.byteOffset, value.byteLength);
+                }
+
+                if (ArrayBuffer.isView(value)) {
+                    return value.slice ? value.slice(0) : new value.constructor(value);
+                }
+
+                if (value instanceof Map) {
+                    var clonedMap = new Map();
+                    seen.set(value, clonedMap);
+                    value.forEach(function (mapValue, mapKey) {
+                        clonedMap.set(cloneValue(mapKey, seen), cloneValue(mapValue, seen));
+                    });
+                    return clonedMap;
+                }
+
+                if (value instanceof Set) {
+                    var clonedSet = new Set();
+                    seen.set(value, clonedSet);
+                    value.forEach(function (setValue) {
+                        clonedSet.add(cloneValue(setValue, seen));
+                    });
+                    return clonedSet;
+                }
+
+                if (Array.isArray(value)) {
+                    var clonedArray = [];
+                    seen.set(value, clonedArray);
+                    for (var i = 0; i < value.length; i += 1) {
+                        clonedArray[i] = cloneValue(value[i], seen);
+                    }
+                    return clonedArray;
+                }
+
+                var prototype = Object.getPrototypeOf(value);
+                var clonedObject = Object.create(prototype);
+                seen.set(value, clonedObject);
+
+                Reflect.ownKeys(value).forEach(function (key) {
+                    var descriptor = Object.getOwnPropertyDescriptor(value, key);
+                    if (!descriptor) {
+                        return;
+                    }
+                    if ("value" in descriptor) {
+                        descriptor.value = cloneValue(descriptor.value, seen);
+                    }
+                    Object.defineProperty(clonedObject, key, descriptor);
+                });
+
+                return clonedObject;
+            }
+
+            globalThis.structuredClone = function (value) {
+                return cloneValue(value, new WeakMap());
+            };
+        })();
+    </script>
+    <style>
+        @font-face {
+        font-family: 'High Spirited.ttf';
+        src: url('_next/static/media/72a9a947-27be-461f-8c30-9ff60249d4bf.ttf') format('truetype');
+        }
+
+        @font-face {
+        font-family: 'VNI-Springtime.ttf';
+        src: url('_next/static/media/f2b0a8e9-0c99-4eae-8a6b-a689e0bcc950.ttf') format('truetype');
+        }
+
+        @font-face {
+        font-family: '1FTV-VIP-High-Spirited.otf';
+        src: url('_next/static/media/a51be5fd-8291-445f-b203-d13e3aa377f5.otf') format('truetype');
+        }
+    </style>
+    <style data-emotion="css-global" data-s=""></style>
+    <style data-emotion="css-global" data-s=""></style>
+    <style data-emotion="css" data-s=""></style>
+    <style data-styled="active" data-styled-version="6.1.19"></style>
+    <style type="text/css" data-styled-jsx="">
+        :root {
+            --color-primary: #10B981;
+            --color-secondary: #ECFDF5;
+            --color-accent: #F59E0B;
+            --color-background: #FFFFFF;
+            --color-text: #1F2937;
+            --color-textLight: #6B7280;
+        }
+    </style>
+    <style id="font-face-High-Spirited.ttf">
+        @font-face {
+            font-family: "High Spirited.ttf";
+            src: url("https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/72a9a947-27be-461f-8c30-9ff60249d4bf.ttf");
+            font-display: swap;
+        }
+    </style>
+    <style id="font-face-VNI-Springtime.ttf">
+        @font-face {
+            font-family: "VNI-Springtime.ttf";
+            src: url("https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/f2b0a8e9-0c99-4eae-8a6b-a689e0bcc950.ttf");
+            font-display: swap;
+        }
+    </style>
+    <style id="font-face-1FTV-VIP-High-Spirited.otf">
+        @font-face {
+            font-family: "1FTV-VIP-High-Spirited.otf";
+            src: url("https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/a51be5fd-8291-445f-b203-d13e3aa377f5.otf");
+            font-display: swap;
+        }
+    </style>
+    <style id="react-tooltip-core-styles" type="text/css">
+        :root {
+            --rt-color-white: #fff;
+            --rt-color-dark: #222;
+            --rt-color-success: #8dc572;
+            --rt-color-error: #be6464;
+            --rt-color-warning: #f0ad4e;
+            --rt-color-info: #337ab7;
+            --rt-opacity: 0.9;
+            --rt-transition-show-delay: 0.15s;
+            --rt-transition-closing-delay: 0.15s;
+            --rt-arrow-size: 8px
+        }
+
+        .core-styles-module_tooltip__3vRRp {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            opacity: 0;
+            will-change: opacity
+        }
+
+        .core-styles-module_fixed__pcSol {
+            position: fixed
+        }
+
+        .core-styles-module_arrow__cvMwQ {
+            position: absolute;
+            background: inherit;
+            z-index: -1
+        }
+
+        .core-styles-module_noArrow__xock6 {
+            display: none
+        }
+
+        .core-styles-module_clickable__ZuTTB {
+            pointer-events: auto
+        }
+
+        .core-styles-module_show__Nt9eE {
+            opacity: var(--rt-opacity);
+            transition: opacity var(--rt-transition-show-delay)ease-out
+        }
+
+        .core-styles-module_closing__sGnxF {
+            opacity: 0;
+            transition: opacity var(--rt-transition-closing-delay)ease-in
+        }
+    </style>
+    <style id="react-tooltip-base-styles" type="text/css">
+        .styles-module_tooltip__mnnfp {
+            padding: 8px 16px;
+            border-radius: 3px;
+            font-size: 90%;
+            width: max-content
+        }
+
+        .styles-module_arrow__K0L3T {
+            width: var(--rt-arrow-size);
+            height: var(--rt-arrow-size)
+        }
+
+        [class*='react-tooltip__place-top']>.styles-module_arrow__K0L3T {
+            transform: rotate(45deg)
+        }
+
+        [class*='react-tooltip__place-right']>.styles-module_arrow__K0L3T {
+            transform: rotate(135deg)
+        }
+
+        [class*='react-tooltip__place-bottom']>.styles-module_arrow__K0L3T {
+            transform: rotate(225deg)
+        }
+
+        [class*='react-tooltip__place-left']>.styles-module_arrow__K0L3T {
+            transform: rotate(315deg)
+        }
+
+        .styles-module_dark__xNqje {
+            background: var(--rt-color-dark);
+            color: var(--rt-color-white)
+        }
+
+        .styles-module_light__Z6W-X {
+            background-color: var(--rt-color-white);
+            color: var(--rt-color-dark)
+        }
+
+        .styles-module_success__A2AKt {
+            background-color: var(--rt-color-success);
+            color: var(--rt-color-white)
+        }
+
+        .styles-module_warning__SCK0X {
+            background-color: var(--rt-color-warning);
+            color: var(--rt-color-white)
+        }
+
+        .styles-module_error__JvumD {
+            background-color: var(--rt-color-error);
+            color: var(--rt-color-white)
+        }
+
+        .styles-module_info__BWdHW {
+            background-color: var(--rt-color-info);
+            color: var(--rt-color-white)
+        }
+    </style>
+    <style>
+        .--savior-overlay-transform-reset {
+            transform: none !important;
+        }
+
+        .--savior-overlay-z-index-top {
+            z-index: 2147483643 !important;
+        }
+
+        .--savior-overlay-position-relative {
+            position: relative;
+        }
+
+        .--savior-overlay-position-static {
+            position: static !important;
+        }
+
+        .--savior-overlay-overflow-hidden {
+            overflow: hidden !important;
+        }
+
+        .--savior-overlay-overflow-x-visible {
+            overflow-x: visible !important;
+        }
+
+        .--savior-overlay-overflow-y-visible {
+            overflow-y: visible !important;
+        }
+
+        .--savior-overlay-z-index-reset {
+            z-index: auto !important;
+        }
+
+        .--savior-overlay-display-none {
+            display: none !important;
+        }
+
+        .--savior-overlay-clearfix {
+            clear: both;
+        }
+
+        .--savior-overlay-reset-filter {
+            filter: none !important;
+            backdrop-filter: none !important;
+        }
+
+        .--savior-tooltip-host {
+            z-index: 9999;
+            position: absolute;
+            top: 0;
+        }
+
+        /*Override css styles for Twitch.tv*/
+        main.--savior-overlay-z-index-reset {
+            z-index: auto !important;
+        }
+
+        .modal__backdrop.--savior-overlay-z-index-reset {
+            position: static !important;
+        }
+
+        main.--savior-overlay-z-index-top {
+            z-index: auto !important;
+        }
+
+        main.--savior-overlay-z-index-top .channel-root__player-container+div,
+        main.--savior-overlay-z-index-top .video-player-hosting-ui__container+div {
+            opacity: 0.1;
+        }
+
+        /*Dirty hack for facebook big video page e.g: https://www.facebook.com/abc/videos/...*/
+        .--savior-backdrop {
+            position: fixed !important;
+            z-index: 2147483642 !important;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw !important;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .--savior-overlay-twitter-video-player {
+            position: fixed;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+        }
+
+        .--savior-overlay-z-index-reset [class*="DivSideNavContainer"],
+        .--savior-overlay-z-index-reset [class*="DivHeaderContainer"],
+        .--savior-overlay-z-index-reset [class*="DivBottomContainer"],
+        .--savior-overlay-z-index-reset [class*="DivCategoryListWrapper"],
+        .--savior-overlay-z-index-reset [data-testid="sidebarColumn"],
+        .--savior-overlay-z-index-reset header[role="banner"],
+        .--savior-overlay-z-index-reset [data-testid="cellInnerDiv"]:not(.--savior-overlay-z-index-reset),
+        .--savior-overlay-z-index-reset [aria-label="Home timeline"]>div:first-child,
+        .--savior-overlay-z-index-reset [aria-label="Home timeline"]>div:nth-child(3) {
+            z-index: -1 !important;
+        }
+
+        .--savior-overlay-z-index-reset [data-testid="cellInnerDiv"] .--savior-backdrop+div {
+            z-index: 2147483643 !important;
+        }
+
+        .--savior-overlay-z-index-reset [data-testid="primaryColumn"]>[aria-label="Home timeline"] {
+            z-index: 0 !important;
+        }
+
+        .--savior-overlay-z-index-reset#mtLayer,
+        .--savior-overlay-z-index-reset.media-layer {
+            z-index: 3000 !important;
+        }
+
+        .--savior-overlay-position-relative [class*="SecBar_secBar_"],
+        .--savior-overlay-position-relative .woo-box-flex [class*="Frame_top_"] {
+            z-index: 0 !important;
+        }
+
+        .--savior-overlay-position-relative .vue-recycle-scroller__item-view:not(.--savior-overlay-z-index-reset),
+        .--savior-overlay-position-relative .woo-panel-main[class*="BackTop_main_"],
+        .--savior-overlay-position-relative [class*="Main_side_"] {
+            z-index: -1 !important;
+        }
+
+        /* Fix conflict css with zingmp3 */
+        .zm-video-modal.--savior-overlay-z-index-reset {
+            position: absolute;
+        }
+
+        /* Dirty hack for xvideos99 */
+        #page #main.--savior-overlay-z-index-reset {
+            z-index: auto !important;
+        }
+
+        /* Overlay for ok.ru */
+        #vp_w.--savior-overlay-z-index-reset.media-layer.media-layer__video {
+            overflow-y: hidden;
+            z-index: 2147483643 !important;
+        }
+
+        /* Fix missing controller for tv.naver.com */
+        .--savior-overlay-z-index-top.rmc_controller,
+        .--savior-overlay-z-index-top.rmc_setting_intro,
+        .--savior-overlay-z-index-top.rmc_highlight,
+        .--savior-overlay-z-index-top.rmc_control_settings {
+            z-index: 2147483644 !important;
+        }
+
+        /* Dirty hack for douyi.com */
+        .swiper-wrapper.--savior-overlay-z-index-reset .swiper-slide:not(.swiper-slide-active),
+        .swiper-wrapper.--savior-overlay-transform-reset .swiper-slide:not(.swiper-slide-active) {
+            display: none;
+        }
+
+        .videoWrap+div>div {
+            pointer-events: unset;
+        }
+
+        /* Dirty hack for fpt.ai */
+        .mfp-wrap.--savior-overlay-z-index-top {
+            position: relative;
+        }
+
+        .mfp-wrap.--savior-overlay-z-index-top .mfp-close {
+            display: none;
+        }
+
+        .mfp-wrap.--savior-overlay-z-index-top .mfp-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        section.--savior-overlay-z-index-reset>main[role="main"].--savior-overlay-z-index-reset+nav {
+            z-index: -1 !important;
+        }
+
+        section.--savior-overlay-z-index-reset>main[role="main"].--savior-overlay-z-index-reset section.--savior-overlay-z-index-reset div.--savior-overlay-z-index-reset~div {
+            position: relative;
+        }
+
+        .watching-movie #video-player.--savior-overlay-z-index-top {
+            z-index: 2147483644 !important;
+        }
+
+        div[class^="tiktok"].--savior-overlay-z-index-reset {
+            z-index: 2147483644 !important;
+        }
+
+        .--savior-lightoff-fix section:not(:has([class*="--savior-overlay-"])),
+        .--savior-lightoff-fix section.section_video~section {
+            z-index: -1;
+            position: relative;
+        }
+
+        .--savior-lightoff-fix header,
+        .--savior-lightoff-fix footer,
+        .--savior-lightoff-fix .top-header,
+        .--savior-lightoff-fix .swiper-container,
+        .--savior-lightoff-fix #to_top,
+        .--savior-lightoff-fix #button-adblock {
+            z-index: -1 !important;
+        }
+
+        @-moz-keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @-o-keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=WindSong:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css" as="style">
+    <link rel="stylesheet" href="animations.css" as="style">
+
+    <style>
+        /* Đặt toàn màn hình */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://w.ladicdn.com/s768x890/5c728619c417ab07e5194baa/istockphoto-1370544962-612x612-20240609095545-gdg85.jpg');
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 90000060;
+            gap: 10px
+        }
+
+        #preloader h1 {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out infinite;
+            font-family: "Dancing Script", cursive;
+            font-size: clamp(24px, 8vw, 60px);
+            /* Điều chỉnh font-size từ 24px đến 60px, dựa trên chiều rộng viewport */
+            font-style: italic;
+            line-height: 1.2;
+            color: rgb(139, 91, 19);
+            text-align: center;
+        }
+
+        #preloader h2 {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out infinite;
+            font-family: "Dancing Script", cursive;
+            font-size: 2rem;
+            /* Điều chỉnh font-size từ 24px đến 60px, dựa trên chiều rộng viewport */
+            font-style: italic;
+            line-height: 1.2;
+            color: rgb(139, 91, 19);
+            text-align: center;
+        }
+
+        #preloader .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid white;
+            border-radius: 50%;
+            margin-top: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        #content {
+            display: none;
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        #content h1 {
+            color: #ff6f61;
+            font-size: 4rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.3rem;
+            color: white;
+            background-color: rgb(123, 79, 13);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 10px;
+            font-family: "Dancing Script", cursive;
+        }
+
+        .btn:hover {
+            background-color: rgb(123, 79, 13);
+        }
+    </style>
+
+    <!-- Nút toggle nhạc -->
+     <style>
+        #music-toggle {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #fff;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        #music-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        #music-toggle img {
+            width: 25px;
+            height: 25px;
+            pointer-events: none;
+        }
+
+        /* Hiệu ứng rung, xoay và phát sáng đỏ đậm */
+
+        .vibrating {
+            animation: pulse 1.2s infinite, rotate 4s linear infinite, glow 2s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.6), 0 0 25px rgba(139, 0, 0, 0.4);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05) rotate(1deg);
+            }
+            100% {
+                transform: scale(1) rotate(-1deg);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px rgba(139, 0, 0, 0.2), 0 0 20px rgba(139, 0, 0, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(139, 0, 0, 0.6), 0 0 30px rgba(139, 0, 0, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(139, 0, 0, 0.2), 0 0 20px rgba(139, 0, 0, 0.2);
+            }
+        }
+    </style>
+    <audio id="background-music" loop="" src="public/audio/backgroup.mp3"></audio>
+    <div id="music-toggle" title="Bật / Tắt nhạc">
+        <img id="play-icon" src="icons/play.jpg" alt="Play Icon">
+        <img id="pause-icon" src="icons/pause.png" alt="Pause Icon" style="display: none;">
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const audio = document.getElementById("background-music");
+            const toggleButton = document.getElementById("music-toggle");
+            const playIcon = document.getElementById("play-icon");
+            const pauseIcon = document.getElementById("pause-icon");
+            const openCardBtn = document.getElementById("openCardBtn");
+
+            let isPlaying = false;
+            let hasStarted = false;
+
+            // Chạm lần đầu để phát nhạc
+            openCardBtn.addEventListener("click", function() {
+                if (!hasStarted) {
+                    console.log("run");
+                    audio.play().then(() => {
+                        isPlaying = true;
+                        hasStarted = true;
+                        playIcon.style.display = "none";
+                        pauseIcon.style.display = "block";
+                        toggleButton.classList.add("vibrating");
+                    }).catch((e) => {
+                        console.log("Lỗi phát nhạc: ", e);
+                    });
+                }
+            }, {
+                once: true
+            });
+
+            // Bấm nút để bật/tắt nhạc
+            toggleButton.addEventListener("click", function(event) {
+                event.stopPropagation(); // không lan sự kiện click
+
+                if (isPlaying) {
+                    audio.pause();
+                    isPlaying = false;
+                    playIcon.style.display = "block";
+                    pauseIcon.style.display = "none";
+                    toggleButton.classList.remove("vibrating");
+                } else {
+                    audio.play().then(() => {
+                        isPlaying = true;
+                        playIcon.style.display = "none";
+                        pauseIcon.style.display = "block";
+                        toggleButton.classList.add("vibrating");
+                    });
+                }
+            });
+        });
+    </script>
+    <!-- Attribution (ẩn) -->
+    <script src="js/base64.js"></script>
+    <script>
+    // Xử lý preloader
+    window.addEventListener("load", function() {
+        const preloader = document.getElementById("preloader");
+
+        //set invite text
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const inviteParam = urlParams.get('invite');
+        const inviteText = document.getElementById("invite-text");
+        if (inviteParam) {
+            inviteText.textContent = `Trân Trọng Kính Mời: ${decodeCustom(inviteParam)}`;
+        }
+    });
+    // Hàm mở thiệp khi nhấn nút
+    function openCard() {
+        preloader.style.opacity = "0";
+        preloader.style.transition = "opacity 1s ease-in-out";
+        setTimeout(() => {
+            preloader.style.display = "none";
+        }, 1000); // Chờ 1 giây sau khi ẩn preloader
+        document.body.style.overflow = 'auto';
+    }
+    </script>
+</head>
+
+<body class="geist_a71539c9-module__T19VSG__variable geist_mono_8d43a2aa-module__8Li5zG__variable antialiased">
+    <div id="preloader">
+        <h1>Trọng Dương & Hồng Nhung</h1>
+        <h2 id="invite-text">Trân Trọng Kính Mời</h2>
+        <!-- <div class="spinner">Trân trọng kính mời</div> -->
+        <button class="btn" id="openCardBtn" onclick="openCard()">Mở Thiệp</button>
+    </div> 
+    <div data-scope="toast" data-part="group" dir="ltr" tabindex="-1" aria-label="bottom-end Notifications alt+T"
+        id="toast-group:bottom-end" data-placement="bottom-end" data-side="bottom" data-align="end" aria-live="polite"
+        role="region" class="css-1l30axn"
+        style="position: fixed; pointer-events: none; display: flex; flex-direction: column; --gap: 16px; --first-height: 0px; --viewport-offset-left: 1rem; --viewport-offset-right: 1rem; --viewport-offset-top: 1rem; --viewport-offset-bottom: 1rem; z-index: 2147483647; align-items: flex-end; bottom: max(env(safe-area-inset-bottom, 0px), 1rem); inset-inline-end: calc(env(safe-area-inset-right, 0px) + 1rem);">
+    </div>
+    <div id="popover:_r_1_:popper" data-scope="popover" data-part="positioner" dir="ltr"
+        class="chakra-popover__positioner"
+        style="position: absolute; isolation: isolate; min-width: max-content; pointer-events: none; top: 0px; left: 0px; transform: translate3d(0px, -100vh, 0px); z-index: var(--z-index);">
+        <div data-scope="popover" data-part="content" dir="ltr" id="popover:_r_1_:content" tabindex="-1" role="dialog"
+            hidden="" data-state="closed" aria-labelledby="popover:_r_1_:title" aria-describedby="popover:_r_1_:desc"
+            class="chakra-popover__content css-2taluw">
+            <div class="chakra-popover__body css-1doc2ht">
+                <div class="chakra-stack css-18abhre">
+                    <div class="chakra-stack css-1y3f6ad">
+                        <p class="css-142qk7r">Giao diện</p><button type="button" aria-label="Toggle color mode"
+                            class="chakra-button css-1hnovgo"><svg stroke="currentColor" fill="none" stroke-width="2"
+                                viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em"
+                                width="1em" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <path d="M12 2v2"></path>
+                                <path d="M12 20v2"></path>
+                                <path d="m4.93 4.93 1.41 1.41"></path>
+                                <path d="m17.66 17.66 1.41 1.41"></path>
+                                <path d="M2 12h2"></path>
+                                <path d="M20 12h2"></path>
+                                <path d="m6.34 17.66-1.41 1.41"></path>
+                                <path d="m19.07 4.93-1.41 1.41"></path>
+                            </svg>
+                            <div class="css-14kri6g"></div>
+                        </button>
+                    </div>
+                    <div class="chakra-stack css-1y3f6ad">
+                        <p class="css-142qk7r">Ngôn ngữ</p><button type="button" aria-label="Change language"
+                            data-scope="tooltip" data-part="trigger" id="tooltip:_r_2_:trigger" dir="ltr"
+                            data-state="closed" class="chakra-button chakra-tooltip__trigger css-kexoit">
+                            <div class="css-yjetre"><img alt="Tiếng Việt" loading="lazy" width="20" height="20"
+                                    decoding="async" data-nimg="1"
+                                    srcset="_next/image?url=%2Fimages%2Fvietnam.png&amp;w=32&amp;q=75 1x, /_next/image?url=%2Fimages%2Fvietnam.png&amp;w=48&amp;q=75 2x"
+                                    src="_next/image?url=%2Fimages%2Fvietnam.png&amp;w=48&amp;q=75"
+                                    style="color: transparent; object-fit: cover; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.8);">
+                            </div>
+                            <div class="css-16gd3pv"></div>
+                            <div class="css-1a4lh8j"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="view-page" data-viewport-platform="mobile"
+        style="padding-top: 0px; overflow: hidden visible; visibility: visible; opacity: 1; background-color: rgb(255, 255, 255);">
+        <div class="w-full">
+            <div class="content-wrapper" id="content-wrapper"
+                style="width: 100%; min-height: 100vh; position: relative; font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; color: rgb(51, 51, 51); text-align: left; direction: ltr; padding: 0px;">
+                <div class="w-full">
+                    <div data-node-id="2NeThAcBQ9" data-preserve-transform="true" class="sections-wrapper"
+                        style="position: relative; height: 366px; isolation: isolate; z-index: 23; width: 100%; left: auto; margin: 0px auto;">
+                        <div
+                            style="content: &quot;&quot;; position: absolute; inset: 0px; width: 100%; height: 100%; z-index: 0; background: rgb(255, 255, 255); filter: brightness(100%) contrast(100%) saturate(100%) hue-rotate(0deg) blur(0px) sepia(0%) grayscale(0%) invert(0%);">
+                        </div>
+                        <div class="content-wrapper"
+                            style="width: 100%; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgb(255, 255, 255); opacity: 1;">
+                            <div class="content-container"
+                                style="position: relative; z-index: 24; width: 380px; height: 100%; margin-left: calc(50% - 190px); margin-right: calc(50% - 190px); min-height: 100px; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 0px 16px; box-sizing: border-box;">
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="T_lkyvhN4P"
+                                        style="width: 458px; height: 458px; position: absolute; top: -70px; left: -40px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/1.jpg"
+                                                style="width: 100%;">
+                                        </div>
+                                        <div
+                                            style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; mix-blend-mode: normal; opacity: 0.78; pointer-events: none; background: rgba(0, 0, 0, 0);">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="T5esoe9A3V"
+                                        style="width: 176px; background: transparent; opacity: 1; position: absolute; top: 41px; left: -3px; color: rgb(255, 255, 255); font-size: 28px; font-family: &quot;DFVN-KaelynaScript.otf&quot;; text-align: right;">
+                                        <span style="width: 100%; outline: none;">Trọng Dương&nbsp;</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="-QQIe6JsUa"
+                                        style="width: 190px; background: transparent; opacity: 1; position: absolute; top: 41px; left: 205px; color: rgb(255, 255, 255); font-size: 28px; font-family: &quot;DFVN-KaelynaScript.otf&quot;;">
+                                        <span style="width: 100%; outline: none;">Hồng Nhung</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="9miq3qxl_P"
+                                        style="width: 57px; background: transparent; opacity: 1; position: absolute; top: 44px; left: 160px; color: rgb(255, 255, 255); font-size: 25px; font-family: &quot;VNI 24 Love.ttf&quot;; text-align: center;">
+                                        <span style="width: 100%; outline: none;">&amp;</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="u7OcsqielL"
+                                        style="background: transparent; opacity: 1; position: absolute; top: 10px; left: 133px; color: rgb(255, 255, 255); font-size: 15px; font-family: Philosopher, sans-serif; font-synthesis: weight style; font-weight: 700; text-align: center;">
+                                        <span style="width: 100%; outline: none;">LOVE FOUND US
+                                        </span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="2XYtOv_YSv"
+                                        style="width: 373px; background: transparent; opacity: 1; position: absolute; top: 333px; left: 3px; color: rgb(255, 255, 255); font-size: 18px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">26 . 04 . 2026</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <div data-node-id="section-1" data-preserve-transform="true" class="sections-wrapper"
+                        style="position: relative; height: 866px; isolation: isolate; z-index: 23; width: 100%; left: auto; margin: 0px auto;">
+                        <div
+                            style="content: &quot;&quot;; position: absolute; inset: 0px; width: 100%; height: 100%; z-index: 0; background: rgb(255, 255, 255); filter: brightness(100%) contrast(100%) saturate(100%) hue-rotate(0deg) blur(0px) sepia(0%) grayscale(0%) invert(0%);">
+                        </div>
+                        <div class="content-wrapper"
+                            style="width: 100%; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgb(255, 255, 255); opacity: 1;">
+                            <div class="content-container"
+                                style="position: relative; z-index: 24; width: 380px; height: 100%; margin-left: calc(50% - 190px); margin-right: calc(50% - 190px); min-height: 100px; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 0px 16px; box-sizing: border-box;">
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="52PalJoliu"
+                                        style="width: 379px; background: transparent; opacity: 1; position: absolute; top: 31px; left: 0px; color: rgb(20, 56, 28); font-size: 15px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">TRÂN TRỌNG KÍNH MỚI</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="39s3giM6Rp"
+                                        style="width: 379px; background: transparent; opacity: 1; position: absolute; top: 362px; left: -1px; color: rgb(20, 56, 28); font-size: 15px; font-family: Quicksand, sans-serif; font-style: italic; font-synthesis: weight style; text-align: center;">
+                                        <span style="width: 100%; outline: none;">(Tức ngày 10 tháng 03 năm Bính Ngọ)</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="pEY7Qxk29B"
+                                        style="width: 122px; background: transparent; opacity: 1; position: absolute; top: 205px; left: 46px; color: rgb(20, 56, 28); font-size: 17px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">TRỌNG DƯƠNG</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="thMnK2dUzz"
+                                        style="width: 120px; background: transparent; opacity: 1; position: absolute; top: 297px; left: 28px; color: rgb(20, 56, 28); font-size: 17px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">CHỦ NHẬT</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="4IXaMBoQhX"
+                                        style="width: 379px; background: transparent; opacity: 1; position: absolute; top: 410px; left: 0px; color: rgb(20, 56, 28); font-size: 17px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">ĐỊA ĐIỂM</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="U7qstrqqa7"
+                                        style="width: 187px; background: transparent; opacity: 1; position: absolute; top: 499px; left: 2px; color: rgb(20, 56, 28); font-size: 15px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">Nhà Trai</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="d8_lq6BReM"
+                                        style="width: 187px; background: transparent; opacity: 1; position: absolute; top: 499px; left: 195px; color: rgb(20, 56, 28); font-size: 15px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">Nhà Gái</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="WOc58LGGxK"
+                                        style="width: 187px; background: transparent; opacity: 1; position: absolute; top: 522px; left: 2px; color: rgb(20, 56, 28); font-size: 14px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">NGUYỄN VĂN DŨNG</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="m4FSLMikSk"
+                                        style="width: 187px; background: transparent; opacity: 1; position: absolute; top: 521px; left: 194px; color: rgb(20, 56, 28); font-size: 14px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">TRẦN QUỐC DŨNG</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="GW13K3fL-X"
+                                        style="width: 187px; background: transparent; opacity: 1; position: absolute; top: 540px; left: 2px; color: rgb(20, 56, 28); font-size: 14px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">ĐẬU THỊ THANH</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="GW13K3fL-X"
+                                        style="width: 187px; background: transparent; opacity: 1; position: absolute; top: 564px; left: 4px; color: rgb(20, 56, 28); font-size: 14px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <a href="https://maps.app.goo.gl/DNuDdou4NTt5WtKL9" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; color: rgb(20, 56, 28); text-decoration: none; padding: 5px 10px; border: 1px solid rgb(20, 56, 28); border-radius: 4px; background: rgba(255, 255, 255, 0.8); transition: all 0.3s ease; cursor: pointer; font-family: Philosopher, sans-serif; font-weight: 500;">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                            <span style="outline: none; font-size: 11px;">Tư Gia</span>
+                                        </a></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="ztMo62ojhk"
+                                        style="width: 187px; background: transparent; opacity: 1; position: absolute; top: 538px; left: 195px; color: rgb(20, 56, 28); font-size: 14px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">LÊ THỊ NGUYỆT</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="ztMo62ojhk"
+                                        style="width: 187px; background: transparent; opacity: 1; position: absolute; top: 564px; left: 200px; color: rgb(20, 56, 28); font-size: 14px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <a href="https://maps.app.goo.gl/ZryHy78wSP98dhq87" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 4px; color: rgb(20, 56, 28); text-decoration: none; padding: 5px 10px; border: 1px solid rgb(20, 56, 28); border-radius: 4px; background: rgba(255, 255, 255, 0.8); transition: all 0.3s ease; cursor: pointer; font-family: Philosopher, sans-serif; font-weight: 500;">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                            <span style="outline: none; font-size: 11px;">Tư Gia</span>
+                                        </a></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="kW6Hc_iuug"
+                                        style="width: 394px; background: transparent; opacity: 0; position: absolute; top: 437px; left: 0px; color: rgb(20, 56, 28); font-size: 16px; font-family: Philosopher, sans-serif; font-synthesis: weight style; font-weight: 700; text-align: center;">
+                                        <span style="width: 100%; outline: none;">SẢNH HERA B - SUMMER VINH CONVENTION CENTER</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="2b-k0ULfnn"
+                                        style="width: 379px; background: transparent; opacity: 0; position: absolute; top: 464px; left: 2px; color: rgb(20, 56, 28); font-size: 16px; font-family: Philosopher, sans-serif; font-synthesis: weight style; font-weight: 700; text-align: center;">
+                                        <span style="width: 100%; outline: none;">343 LÊ DUẨN, PHƯỜNG TRƯỜNG VINH, NGHỆ AN</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="B9CLQrN7I4"
+                                        style="width: 83px; background: transparent; opacity: 1; position: absolute; top: 262px; left: 143px; color: rgb(20, 56, 28); font-size: 15px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">NGÀY 26</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="kifnAF5Df4"
+                                        style="width: 83px; background: transparent; opacity: 1; position: absolute; top: 336px; left: 144px; color: rgb(20, 56, 28); font-size: 15px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">2026</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="Mt1g48T2T2"
+                                        style="width: 83px; background: transparent; opacity: 1; position: absolute; top: 277px; left: 143px; color: rgb(20, 56, 28); font-size: 45px; font-family: Philosopher, sans-serif; font-synthesis: weight style; font-weight: 700; text-align: center;">
+                                        <span style="width: 100%; outline: none;">04</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="OsB7iePzLc"
+                                        style="width: 120px; background: transparent; opacity: 1; position: absolute; top: 297px; left: 224px; color: rgb(20, 56, 28); font-size: 17px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">11 GIỜ 00</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="8SdSOyfr3n"
+                                        style="width: 63px; background: transparent; opacity: 1; position: absolute; top: 193px; left: 157px; color: rgb(20, 56, 28); font-size: 30px; font-family: &quot;High Spirited.ttf&quot;; text-align: center;">
+                                        <span style="width: 100%; outline: none;">and</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="fxKALb0NXS"
+                                        style="width: 167px; background: transparent; opacity: 1; position: absolute; top: 205px; left: 184px; color: rgb(20, 56, 28); font-size: 17px; font-family: Philosopher, sans-serif; text-align: center;">
+                                        <span style="width: 100%; outline: none;">HỒNG NHUNG</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="DvNuQAgCaL"
+                                        style="width: 69px; background: transparent; opacity: 1; position: absolute; top: 134px; left: 80px; color: rgb(20, 56, 28); font-size: 45px; font-family: &quot;WindSong&quot;, cursive; font-synthesis: weight style; font-weight: 700; text-align: center;">
+                                        <span style="width: 100%; outline: none;">D</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="vx5tzdAYd2"
+                                        style="width: 69px; background: transparent; opacity: 1; position: absolute; top: 138px; left: 234px; color: rgb(20, 56, 28); font-size: 43px; font-family: &quot;WindSong&quot;, cursive; font-synthesis: weight style; font-weight: 700; text-align: center;">
+                                        <span style="width: 100%; outline: none;">N</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="FGyGOa1-ps"
+                                        style="width: 360px; background: transparent; opacity: 1; position: absolute; top: 59px; left: 10px; color: rgb(20, 56, 28); font-size: 28px; font-family: &quot;1FTV-VIP-High-Spirited.otf&quot;; text-align: center;">
+                                        <span style="width: 100%; outline: none;">Qúy Khách</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="FaCMcSMt15"
+                                        style="width: 307px; height: 3px; opacity: 1; position: absolute; top: 103px; left: 38px; padding: 10px 0px;">
+                                        <div
+                                            style="width: 100%; height: 100%; border-style: solid; border-color: rgb(20, 56, 28); border-width: 3px 0px 0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="L31ntCLNUg"
+                                        style="width: 45px; height: 71px; position: absolute; top: 123px; left: 166px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/f5a0f038-b6d3-4c82-b883-06840b9b9f53-medium.webp"
+                                                style="width: 100%; height: 100%; transform: translate(-129.443%, -67.0173%) scale(3.69489, 2.33202); transform-origin: left top;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="ARNMpLWh0j"
+                                        style="width: 100px; height: 2px; opacity: 1; position: absolute; top: 282px; left: 39px; padding: 10px 0px;">
+                                        <div
+                                            style="width: 100%; height: 100%; border-style: solid; border-color: rgb(138, 138, 138); border-width: 2px 0px 0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="4YEFo5rmmx"
+                                        style="width: 100px; height: 2px; opacity: 1; position: absolute; top: 282px; left: 231px; padding: 10px 0px;">
+                                        <div
+                                            style="width: 100%; height: 100%; border-style: solid; border-color: rgb(138, 138, 138); border-width: 2px 0px 0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="VT5xKQmg3J"
+                                        style="width: 100px; height: 2px; opacity: 1; position: absolute; top: 320px; left: 234px; padding: 10px 0px;">
+                                        <div
+                                            style="width: 100%; height: 100%; border-style: solid; border-color: rgb(138, 138, 138); border-width: 2px 0px 0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="gl858aqWej"
+                                        style="width: 100px; height: 2px; opacity: 1; position: absolute; top: 320px; left: 38px; padding: 10px 0px;">
+                                        <div
+                                            style="width: 100%; height: 100%; border-style: solid; border-color: rgb(138, 138, 138); border-width: 2px 0px 0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="m8Oh0i-DG8"
+                                        style="width: 100px; height: 2px; opacity: 1; position: absolute; top: 300px; left: 99px; transform: rotate(90deg); padding: 10px 0px;">
+                                        <div
+                                            style="width: 100%; height: 100%; border-style: solid; border-color: rgb(138, 138, 138); border-width: 2px 0px 0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="xsPyN5gCQk"
+                                        style="width: 100px; height: 2px; opacity: 1; position: absolute; top: 300px; left: 170px; transform: rotate(90deg); padding: 10px 0px;">
+                                        <div
+                                            style="width: 100%; height: 100%; border-style: solid; border-color: rgb(138, 138, 138); border-width: 2px 0px 0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div data-node-id="N74hEpL4XF" class=""
+                                        style="width: 338px; height: 247px; opacity: 1; position: absolute; top: 609px; left: 20px; overflow: hidden;">
+                                        <div style="width: 100%; height: 100%; overflow: auto;"><iframe
+                                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3779.9832555584712!2d105.68672867565847!3d18.66474736475346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3139cd92da77d61b%3A0x8758d373a8773500!2sSummer%20Vinh%20Convention%20Center!5e0!3m2!1svi!2s!4v1776199270608!5m2!1svi!2s"
+                                                width="808" height="485" style="border:0;" allowfullscreen=""
+                                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <div data-node-id="FkzIlFQ9Qe" data-preserve-transform="true" class="sections-wrapper"
+                        style="position: relative; height: 839px; isolation: isolate; z-index: 23; width: 100%; left: auto; margin: 0px auto;">
+                        <div
+                            style="content: &quot;&quot;; position: absolute; inset: 0px; width: 100%; height: 100%; z-index: 0; background: rgb(255, 255, 255); filter: brightness(100%) contrast(100%) saturate(100%) hue-rotate(0deg) blur(0px) sepia(0%) grayscale(0%) invert(0%);">
+                        </div>
+                        <div class="content-wrapper"
+                            style="width: 100%; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgb(255, 255, 255); opacity: 1;">
+                            <div class="content-container"
+                                style="position: relative; z-index: 24; width: 380px; height: 100%; margin-left: calc(50% - 190px); margin-right: calc(50% - 190px); min-height: 100px; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 0px 16px; box-sizing: border-box;">
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="oLhMaUPT67"
+                                        style="width: 100px; height: 81px; position: absolute; top: 7px; left: 129px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/78fd3370-5732-4c61-9666-76199d8899a1-medium.webp"
+                                                style="width: 100%; height: 100%; transform: translate(-62.9832%, -69.3912%) scale(2.31714, 2.86067); transform-origin: left top;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="Fl9UUrsQ8L"
+                                        style="width: 230px; height: 2px; opacity: 1; position: absolute; top: 783px; left: 142px; padding: 10px 0px;">
+                                        <div
+                                            style="width: 100%; height: 100%; border-style: solid; border-color: rgb(20, 56, 28); border-width: 2px 0px 0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="7MUkf8UcHH"
+                                        style="width: 218px; height: 2px; opacity: 1; position: absolute; top: 159px; left: 19px; padding: 10px 0px;">
+                                        <div
+                                            style="width: 100%; height: 100%; border-style: solid; border-color: rgb(20, 56, 28); border-width: 2px 0px 0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="zMZInL9lbn"
+                                        style="width: 102px; height: 2px; opacity: 1; position: absolute; top: 210px; left: -32px; transform: rotate(90deg); padding: 10px 0px;">
+                                        <div
+                                            style="width: 100%; height: 100%; border-style: solid; border-color: rgb(20, 56, 28); border-width: 2px 0px 0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="PkQn3Su8I8"
+                                        style="width: 194px; height: 2px; opacity: 1; position: absolute; top: 476px; left: 9px; transform: rotate(90deg); padding: 10px 0px;">
+                                        <div
+                                            style="width: 100%; height: 100%; border-style: solid; border-color: rgb(20, 56, 28); border-width: 2px 0px 0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="I1VX338vgu"
+                                        style="width: 66px; height: 2px; opacity: 1; position: absolute; top: 750px; left: 338px; transform: rotate(90deg); padding: 10px 0px;">
+                                        <div
+                                            style="width: 100%; height: 100%; border-style: solid; border-color: rgb(20, 56, 28); border-width: 2px 0px 0px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="m8B5VHj0Um"
+                                        style="width: 134px; height: 201px; position: absolute; top: 134px; left: 251px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/3.jpg"
+                                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="6EP29-B8KZ"
+                                        style="width: 100px; height: 150px; position: absolute; top: 185px; left: 137px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/2.jpg"
+                                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="Iyb7-JLc8c"
+                                        style="width: 120px; height: 120px; position: absolute; top: 715px; left: 132px; transform: rotate(-290deg);">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/f5a0f038-b6d3-4c82-b883-06840b9b9f53-medium.webp"
+                                                style="width: 100%; height: 100%; transform: translate(-59.1485%, -61.7256%) scale(2.20767, 2.20767); transform-origin: left top;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="yBfD5g7Lsi"
+                                        style="width: 134px; height: 201px; position: absolute; top: 599px; left: -5px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/4.jpg"
+                                                style="width: 100%; height: 100%; transform: translate(-4.13783%, -11.1111%) scale(1.16514, 1.11169); transform-origin: left top;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="w0eOQLCTI6"
+                                        style="width: 201px; height: 128px; position: absolute; top: 599px; left: 149px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/5.jpg"
+                                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="yaz3sBrti2"
+                                        style="width: 120px; height: 120px; position: absolute; top: 440px; left: 249px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/fbba66dd-0dcd-424c-b0ac-446d340dfa05-medium.webp"
+                                                style="width: 100%; height: 100%; transform: translate(-59.1485%, -61.7256%) scale(2.20767, 2.20767); transform-origin: left top;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="SfdYTozpcE"
+                                        style="width: 377px; background: transparent; opacity: 1; position: absolute; top: 92px; left: 2px; color: rgb(20, 56, 28); font-size: 21px; font-family: &quot;High Spirited.ttf&quot;; text-align: center;">
+                                        <span style="width: 100%; outline: none;">Save The Date</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="MVTSwVxsvy"
+                                        style="width: 113px; background: transparent; opacity: 1; position: absolute; top: 298px; left: 29px; color: rgb(20, 56, 28); font-size: 30px; font-family: &quot;High Spirited.ttf&quot;; text-align: center;">
+                                        <span style="width: 100%; outline: none;">Timeline</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="7aGqNaFRD5"
+                                        style="width: 107px; background: transparent; opacity: 1; position: absolute; top: 271px; left: 2px; color: rgb(20, 56, 28); font-size: 18px; font-family: Chonburi, cursive; text-align: center;">
+                                        <span style="width: 100%; outline: none;">WEDDING</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="3NFuKB1KfE"
+                                        style="width: 107px; background: transparent; opacity: 1; position: absolute; top: 396px; left: -31px; color: rgb(20, 56, 28); font-size: 15px; font-family: &quot;Yeseva One&quot;, cursive; font-synthesis: weight style; font-weight: 700; text-align: right;">
+                                        <span style="width: 100%; outline: none;">10 : 30</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="K2aB7JXgJp"
+                                        style="width: 144px; background: transparent; opacity: 1; position: absolute; top: 396px; left: 125px; color: rgb(20, 56, 28); font-size: 15px; font-family: &quot;Yeseva One&quot;, cursive; font-synthesis: weight style; font-weight: 700;">
+                                        <span style="width: 100%; outline: none;">Welcome Guests</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="TC5oQ4YA1r"
+                                        style="width: 164px; background: transparent; opacity: 1; position: absolute; top: 467px; left: 125px; color: rgb(20, 56, 28); font-size: 15px; font-family: &quot;Yeseva One&quot;, cursive; font-synthesis: weight style; font-weight: 700;">
+                                        <span style="width: 100%; outline: none;">Wedding Ceremony</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="qgfSpSpZS4"
+                                        style="width: 164px; background: transparent; opacity: 1; position: absolute; top: 537px; left: 125px; color: rgb(20, 56, 28); font-size: 15px; font-family: &quot;Yeseva One&quot;, cursive; font-synthesis: weight style; font-weight: 700;">
+                                        <span style="width: 100%; outline: none;">Intimate Party</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="mE-lECnIch"
+                                        style="width: 144px; background: transparent; opacity: 1; position: absolute; top: 418px; left: 129px; color: rgb(20, 56, 28); font-size: 12px; font-family: Quicksand, sans-serif;">
+                                        <span style="width: 100%; outline: none;">Đón Khách</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="Q6FOMeAobP"
+                                        style="width: 144px; background: transparent; opacity: 1; position: absolute; top: 491px; left: 129px; color: rgb(20, 56, 28); font-size: 12px; font-family: Quicksand, sans-serif;">
+                                        <span style="width: 100%; outline: none;">Thời Khắc Trọng Đại</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="tBG5fHKPc9"
+                                        style="width: 144px; background: transparent; opacity: 1; position: absolute; top: 565px; left: 129px; color: rgb(20, 56, 28); font-size: 12px; font-family: Quicksand, sans-serif;">
+                                        <span style="width: 100%; outline: none;">Khai Tiệc</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="h1mTUwvpQt"
+                                        style="width: 107px; background: transparent; opacity: 1; position: absolute; top: 469px; left: -31px; color: rgb(20, 56, 28); font-size: 15px; font-family: &quot;Yeseva One&quot;, cursive; font-synthesis: weight style; font-weight: 700; text-align: right;">
+                                        <span style="width: 100%; outline: none;">11 : 00</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="wVcZuO3I5c"
+                                        style="width: 107px; background: transparent; opacity: 1; position: absolute; top: 543px; left: -31px; color: rgb(20, 56, 28); font-size: 15px; font-family: &quot;Yeseva One&quot;, cursive; font-synthesis: weight style; font-weight: 700; text-align: right;">
+                                        <span style="width: 100%; outline: none;">11 : 00</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <div data-node-id="P7DMAGLI_n" data-preserve-transform="true" class="sections-wrapper"
+                        style="position: relative; height: 738px; isolation: isolate; z-index: 23; width: 100%; left: auto; margin: 0px auto;">
+                        <div
+                            style="content: &quot;&quot;; position: absolute; inset: 0px; width: 100%; height: 100%; z-index: 0; background: rgb(255, 255, 255); filter: brightness(100%) contrast(100%) saturate(100%) hue-rotate(0deg) blur(0px) sepia(0%) grayscale(0%) invert(0%);">
+                        </div>
+                        <div class="content-wrapper"
+                            style="width: 100%; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgb(255, 255, 255); opacity: 1;">
+                            <div class="content-container"
+                                style="position: relative; z-index: 24; width: 380px; height: 100%; margin-left: calc(50% - 190px); margin-right: calc(50% - 190px); min-height: 100px; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 0px 16px; box-sizing: border-box;">
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="ogNX6TuzvA"
+                                        style="background: transparent; opacity: 1; position: absolute; top: 47px; left: 89px; font-size: 20px; font-family: &quot;Yeseva One&quot;, cursive;">
+                                        <span style="width: 100%; outline: none;">PHOTO</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="LDQpB9hwOH"
+                                        style="width: 123px; background: transparent; opacity: 1; position: absolute; top: 661px; left: 131px; font-size: 16px; font-family: &quot;Yeseva One&quot;, cursive; font-synthesis: weight style; text-decoration: underline; font-weight: 700; text-align: center;">
+                                        <span style="width: 100%; outline: none;">XEM THÊM </span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="text-container notranslate" translate="no" data-node-id="aKsayC7v_-"
+                                        style="background: transparent; opacity: 1; position: absolute; top: 39px; left: 9px; font-size: 30px; font-family: &quot;High Spirited.ttf&quot;;">
+                                        <span style="width: 100%; outline: none;">Wedding</span></div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="wve-YALwmb"
+                                        style="width: 59px; height: 121px; position: absolute; top: -13px; left: 163px; transform: rotate(45deg);">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/users/1929/f5a0f038-b6d3-4c82-b883-06840b9b9f53-medium.webp"
+                                                style="width: 100%; height: 100%; transform: translate(-126.838%, -30.0486%) scale(3.53503, 1.72161); transform-origin: left top;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="MTUOwOzsSV"
+                                        style="width: 147px; height: 222px; position: absolute; top: 10px; left: 222px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/8.jpg"
+                                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="Ow7TgXjQn3"
+                                        style="width: 94px; height: 142px; position: absolute; top: 90px; left: 14px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/6.jpg"
+                                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="dFK7O82b93"
+                                        style="width: 198px; height: 133px; position: absolute; top: 242px; left: 14px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/9.jpg"
+                                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="XBN_irFwSa"
+                                        style="width: 147px; height: 133px; position: absolute; top: 242px; left: 222px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/10.jpg"
+                                                style="width: 100%; height: 100%; transform: translate(0%, -6.8499%) scale(1.00091, 1.65779); transform-origin: left top;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="o4HT-G00Pt"
+                                        style="width: 155px; height: 123px; position: absolute; top: 385px; left: 15px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/11.jpg"
+                                                style="width: 100%; height: 100%; transform: translate(0%, -54.4921%) scale(1.00091, 1.89013); transform-origin: left top;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="KjWuWAtxwG"
+                                        style="width: 155px; height: 123px; position: absolute; top: 518px; left: 14px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/12.jpg"
+                                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="qIHKlKNYtO"
+                                        style="width: 187px; height: 257px; position: absolute; top: 385px; left: 182px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/13.jpg"
+                                                style="width: 100%; height: 100%; transform: translate(0%, -9.18378%) scale(1.00091, 1.09137); transform-origin: left top;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="zi-Y9h7VkA"
+                                        style="width: 94px; height: 142px; position: absolute; top: 90px; left: 118px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/7.jpg"
+                                                style="width: 100%; height: 100%; object-fit: cover;"></div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class=" icon-container " data-node-id="oq5O_IGEUM"
+                                        style="width: 45px; height: 25px; opacity: 1; position: absolute; top: 685px; left: 170px;">
+                                        <div class="wrapper-svg"
+                                            style="width: 100%; height: 100%; object-fit: contain; overflow: hidden;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
+                                                preserveAspectRatio="none" viewBox="0 0 1152 1896.0833" class=""
+                                                fill="rgba(0, 0, 0, 1)">
+                                                <path
+                                                    d="M1075 736q0 13-10 23l-466 466q-10 10-23 10t-23-10L87 759q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z">
+                                                </path>
+                                            </svg></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <div data-node-id="hVnpHv6mwN" data-preserve-transform="true" class="sections-wrapper"
+                        style="position: relative; height: 468px; isolation: isolate; z-index: 23; width: 100%; left: auto; margin: 0px auto;">
+                        <div
+                            style="content: &quot;&quot;; position: absolute; inset: 0px; width: 100%; height: 100%; z-index: 0; background: rgb(255, 255, 255); filter: brightness(100%) contrast(100%) saturate(100%) hue-rotate(0deg) blur(0px) sepia(0%) grayscale(0%) invert(0%);">
+                        </div>
+                        <div class="content-wrapper"
+                            style="width: 100%; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgb(255, 255, 255); opacity: 1;">
+                            <div class="content-container"
+                                style="position: relative; z-index: 24; width: 380px; height: 100%; margin-left: calc(50% - 190px); margin-right: calc(50% - 190px); min-height: 100px; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 0px 16px; box-sizing: border-box;">
+                                <div class="w-full">
+                                    <div class="image-container" data-node-id="z3nCVTFcgD"
+                                        style="width: 458px; height: 466px; box-shadow: rgb(77, 77, 77) 0px 0px 0px 0px inset; position: absolute; top: 1px; left: -39px;">
+                                        <div style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+                                            <img alt="" loading="lazy" decoding="async" fetchpriority="auto"
+                                                src="public/images/14.jpg"
+                                                style="width: 100%; height: 100%; box-shadow: rgb(77, 77, 77) 0px 0px 0px 0px inset; transform: translate(0%, -18.3311%) scale(0.999908, 1.47556); transform-origin: left top;">
+                                        </div>
+                                        <div
+                                            style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; mix-blend-mode: normal; opacity: 0.5; pointer-events: none; background: rgba(0, 0, 0, 0);">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class="container" data-node-id="GPq6Q6nG2k"
+                                        style="width: 458px; height: 113px; background: rgb(255, 255, 255); filter: contrast(100%) brightness(100%) saturate(100%) grayscale(0%) opacity(80%) invert(0%) sepia(0%) hue-rotate(0deg) blur(0px); opacity: 0.8; position: absolute; top: 288px; left: -38px;">
+                                        <div style="width: 100%; height: 100%; position: relative;"></div>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <div class=" text-container  notranslate" translate="no" data-node-id="8bGZp8tPD7"
+                                        style="width: 342px; background: transparent; opacity: 1; position: absolute; top: 284px; left: 20px; color: rgb(20, 87, 34); font-size: 80px; font-family: &quot;High Spirited.ttf&quot;; text-align: center;">
+                                        <span style="width: 100%; outline: none;">Thank You!!</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full"></div>
+                <div class="w-full"></div>
+            </div>
+        </div><audio
+            src="https://s3-hcm-r2.s3cloud.vn/thiepcuoi-mehappy/audio-templates/78e715d8-2e8d-4e44-a68d-78dcff41ce3b.mp3"
+            preload="auto" loop=""></audio><button class="sc-jJLAfE ednnKl chakra-tooltip__trigger" data-scope="tooltip"
+            data-part="trigger" id="tooltip:_r_3_:trigger" dir="ltr" data-state="closed" style="display: none;"><img alt="Play Icon"
+                class="pointer-events-none" src="icons/play.png" style="display: block;"></button>
+    </div>
+    <veepn-lock-screen>
+        <style>
+            @font-face {
+                font-family: FigtreeVF;
+                src: url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2 supports variations"), url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2-variations");
+                font-weight: 100 1000;
+                font-display: swap
+            }
+        </style>
+    </veepn-lock-screen>
+    <div class="quickactions-floating-container" style="position: fixed; bottom: 76px; right: 15px; z-index: 999;">
+        <div id="quick-action-button-0lYds5euIe-0" data-tooltip-id="quick-actions-0lYds5euIe"
+            data-tooltip-content="Xác nhận tham dự" data-tooltip-place="left" data-tooltip-delay-show="0"
+            data-tooltip-delay-hide="300" data-tooltip-index="0" data-tooltip-disabled="true"
+            style="position: absolute; bottom: 60px; left: 0px; width: 50px; height: 50px; background: rgb(20, 56, 28); border-radius: 25px; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: scale(0); transition: 300ms ease-in-out; z-index: 998; box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;">
+            <div style="width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;"><svg
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" x="0px" y="0px" preserveAspectRatio="none"
+                    width="100%" height="100%" class="" fill="#ffffff">
+                    <path
+                        d="M61.029 2.28501C61.9762 2.85331 62.2833 4.08183 61.715 5.02899L52.115 21.029C51.7781 21.5905 51.1876 21.9515 50.5342 21.9955C49.8808 22.0394 49.2473 21.7607 48.8383 21.2494L42.4383 13.2494C41.7482 12.3869 41.8881 11.1283 42.7506 10.4383C43.6131 9.74824 44.8717 9.88808 45.5617 10.7506L50.1649 16.5045L58.285 2.97101C58.8533 2.02385 60.0818 1.71671 61.029 2.28501Z"
+                        fill="#ffffff"></path>
+                    <path
+                        d="M16 6C10.4772 6 6 10.4771 6 16V48C6 53.5228 10.4772 58 16 58H48C53.5228 58 58 53.5228 58 48V26C58 24.8954 58.8954 24 60 24C61.1046 24 62 24.8954 62 26V48C62 55.732 55.732 62 48 62H16C8.26801 62 2 55.732 2 48V16C2 8.26801 8.26801 2 16 2H38C39.1046 2 40 2.89543 40 4C40 5.10457 39.1046 6 38 6H16Z"
+                        fill="#ffffff"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M32 14C27.5817 14 24 17.5817 24 22C24 26.4183 27.5817 30 32 30C36.4183 30 40 26.4183 40 22C40 17.5817 36.4183 14 32 14ZM28 22C28 19.7909 29.7909 18 32 18C34.2091 18 36 19.7909 36 22C36 24.2091 34.2091 26 32 26C29.7909 26 28 24.2091 28 22Z"
+                        fill="#ffffff"></path>
+                    <path
+                        d="M30 32C22.268 32 16 38.268 16 46V48C16 49.1046 16.8954 50 18 50C19.1046 50 20 49.1046 20 48V46C20 40.4771 24.4772 36 30 36V42C30 43.1046 30.8954 44 32 44C33.1046 44 34 43.1046 34 42V36C39.5228 36 44 40.4771 44 46V48C44 49.1046 44.8954 50 46 50C47.1046 50 48 49.1046 48 48V46C48 38.268 41.732 32 34 32H30Z"
+                        fill="#ffffff"></path>
+                </svg></div>
+        </div>
+        <div id="quick-action-button-0lYds5euIe-1" data-tooltip-id="quick-actions-0lYds5euIe"
+            data-tooltip-content="Gửi lời chúc mừng" data-tooltip-place="left" data-tooltip-delay-show="0"
+            data-tooltip-delay-hide="300" data-tooltip-index="1" data-tooltip-disabled="true"
+            style="position: absolute; bottom: 120px; left: 0px; width: 50px; height: 50px; background: rgb(20, 56, 28); border-radius: 25px; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: scale(0); transition: 300ms ease-in-out; z-index: 998; box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;">
+            <div style="width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;"><svg
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px"
+                    y="0px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve"
+                    preserveAspectRatio="none" width="100%" height="100%" class="" fill="#ffffff">
+                    <g>
+                        <g>
+                            <path
+                                d="M52,7H12c-2.757,0-5,2.243-5,5v40c0,2.757,2.243,5,5,5h40c2.757,0,5-2.243,5-5V12C57,9.243,54.757,7,52,7z M55,52    c0,1.654-1.346,3-3,3H12c-1.654,0-3-1.346-3-3V12c0-1.654,1.346-3,3-3h40c1.654,0,3,1.346,3,3V52z"
+                                fill="#ffffff"></path>
+                            <path
+                                d="M49.879,23.293c-0.375-0.375-1.039-0.375-1.414,0L31.494,40.264c-0.11,0.109-0.192,0.243-0.242,0.391l-1.414,4.242    c-0.12,0.359-0.026,0.756,0.242,1.023c0.19,0.19,0.446,0.293,0.707,0.293c0.106,0,0.212-0.017,0.316-0.052l4.242-1.414    c0.147-0.049,0.281-0.132,0.391-0.241l16.971-16.971C52.895,27.348,53,27.093,53,26.828s-0.105-0.52-0.293-0.707L49.879,23.293z     M34.489,42.925l-2.121,0.707l0.707-2.121l16.097-16.097l1.414,1.414L34.489,42.925z"
+                                fill="#ffffff"></path>
+                            <path
+                                d="M16,17h32c0.553,0,1-0.448,1-1s-0.447-1-1-1H16c-0.552,0-1,0.448-1,1S15.448,17,16,17z"
+                                fill="#ffffff"></path>
+                            <path
+                                d="M16,23h28c0.553,0,1-0.448,1-1s-0.447-1-1-1H16c-0.552,0-1,0.448-1,1S15.448,23,16,23z"
+                                fill="#ffffff"></path>
+                            <path
+                                d="M16,29h22c0.553,0,1-0.448,1-1s-0.447-1-1-1H16c-0.552,0-1,0.448-1,1S15.448,29,16,29z"
+                                fill="#ffffff"></path>
+                            <path
+                                d="M16,35h16c0.552,0,1-0.447,1-1s-0.448-1-1-1H16c-0.552,0-1,0.447-1,1S15.448,35,16,35z"
+                                fill="#ffffff"></path>
+                            <path d="M28,39H16c-0.552,0-1,0.447-1,1s0.448,1,1,1h12c0.552,0,1-0.447,1-1S28.552,39,28,39z"
+                                fill="#ffffff"></path>
+                            <path d="M26,45H16c-0.552,0-1,0.447-1,1s0.448,1,1,1h10c0.552,0,1-0.447,1-1S26.552,45,26,45z"
+                                fill="#ffffff"></path>
+                        </g>
+                    </g>
+                </svg></div>
+        </div>
+        <div id="quick-action-button-0lYds5euIe-2" data-tooltip-id="quick-actions-0lYds5euIe"
+            data-tooltip-content="Mừng cưới" data-tooltip-place="left" data-tooltip-delay-show="0"
+            data-tooltip-delay-hide="300" data-tooltip-index="2" data-tooltip-disabled="true"
+            style="position: absolute; bottom: 180px; left: 0px; width: 50px; height: 50px; background: rgb(20, 56, 28); border-radius: 25px; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: scale(0); transition: 300ms ease-in-out; z-index: 998; box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;">
+            <div style="width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;"><svg
+                    xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 100 100" x="0px" y="0px"
+                    preserveAspectRatio="none" width="100%" height="100%" class="" fill="#ffffff">
+                    <path
+                        d="m61.05,8c-4.31,0-8.21,1.74-11.05,4.55-2.84-2.81-6.74-4.55-11.05-4.55-8.67,0-15.71,5.82-15.71,15.71,0,13.96,26.76,31.41,26.76,31.41,0,0,26.76-15.12,26.76-31.41,0-8.43-7.03-15.71-15.71-15.71Zm-11.05,22.13c.12,0,.23.02.33.04,3.16.18,5.68,2.79,5.68,6,0,2.8-1.92,5.15-4.52,5.82v2.77c0,.83-.67,1.5-1.5,1.5s-1.5-.67-1.5-1.5v-2.77c-2.59-.67-4.52-3.02-4.52-5.82,0-.83.67-1.5,1.5-1.5s1.5.67,1.5,1.5c0,1.66,1.35,3.01,3.02,3.01s3.02-1.35,3.02-3.01-1.35-3.02-3.02-3.02c-.12,0-.23-.02-.33-.04-3.16-.18-5.68-2.79-5.68-6,0-2.8,1.92-5.15,4.52-5.82v-2.71c0-.83.67-1.5,1.5-1.5s1.5.67,1.5,1.5v2.71c2.59.67,4.52,3.02,4.52,5.82,0,.83-.67,1.5-1.5,1.5s-1.5-.67-1.5-1.5c0-1.66-1.35-3.02-3.02-3.02s-3.02,1.35-3.02,3.02,1.35,3.01,3.02,3.01Z"
+                        fill="#ffffff"></path>
+                    <path
+                        d="m87.72,66.64l-.26-.24c-.85-.76-2.05-1.03-3.14-.71l-15.68,6.89c-.03-.12-.04-.25-.08-.36-.33-.91-1.08-1.61-1.99-1.86l-17.08-5.13c-2.39-.72-4.92-.75-7.32-.1l-15.14,4.12-3.3-.05.02-1.29c.01-.97-.65-1.81-1.59-2.02l-8.8-1.99c-1.09-.25-2.13.57-2.14,1.69l-.28,20.48c-.02,1.1.97,1.94,2.06,1.75l8.84-1.55c.97-.17,1.68-1,1.69-1.99h0s1.96-.03,1.96-.03l33.09,4.38c.67.09,1.34.13,2,.13,3.13,0,6.19-.97,8.77-2.8l18.26-12.95.14-.11c.88-.8,1.39-1.94,1.39-3.13s-.51-2.33-1.4-3.13Zm-67.2,16.82l-6.59,1.15.24-17.44,6.55,1.48-.21,14.8Zm65.25-12.83l-18.17,12.89c-2.52,1.79-5.59,2.54-8.65,2.14l-33.2-4.39h-.11s-2.1.02-2.1.02l.13-9.08,3.72.05,15.55-4.23c1.86-.51,3.82-.48,5.67.07l17.11,5.13c-1.35,1.94-3.72,2.9-6.05,2.44l-10.27-2.04c-.81-.16-1.6.37-1.76,1.18s.37,1.6,1.18,1.76l10.27,2.04c.58.12,1.17.17,1.74.17,2.02,0,3.97-.7,5.54-1.94l18.85-8.29c.08,0,.16.02.22.07l.26.24c.26.23.4.55.4.9,0,.33-.12.63-.35.86Z"
+                        fill="#ffffff"></path>
+                </svg></div>
+        </div>
+    </div>
+    <style>
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 99197;
+            overflow: hidden;
+        }
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translate(0, -10px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--sway), 100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+    <div class="snow-container" id="snow-container"></div>
+    <script>
+        (function() {
+            const container = document.getElementById('snow-container');
+            const snowflakeCount = 50;
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                const size = Math.random() * 6 + 3;
+                const sway = (Math.random() - 0.5) * 200;
+                snowflake.style.width = size + 'px';
+                snowflake.style.height = size + 'px';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.setProperty('--sway', sway + 'px');
+                snowflake.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                snowflake.style.animationDelay = (Math.random() * 10) + 's';
+                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+                container.appendChild(snowflake);
+            }
+        })();
+    </script>
+  <div id="photo-carousel-modal" class="carousel-modal">
+    <div class="carousel-backdrop"></div>
+    <div class="carousel-container">
+      <button class="carousel-close"></button>
+      <button class="carousel-nav carousel-prev">&#10094;</button>
+      <button class="carousel-nav carousel-next">&#10095;</button>
+      <div class="carousel-wrapper">
+        <div class="carousel-slides"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const photoGalleryImages = [
+      "public/images/carousel/01.jpg",
+      "public/images/carousel/02.jpg",
+      "public/images/carousel/03.jpg",
+      "public/images/carousel/04.jpg",
+      "public/images/carousel/05.jpg",
+      "public/images/carousel/06.jpg",
+      "public/images/carousel/07.jpg",
+      "public/images/carousel/08.jpg",
+      "public/images/carousel/09.jpg",
+      "public/images/carousel/10.jpg",
+      "public/images/carousel/11.jpg",
+      "public/images/carousel/12.jpg",
+      "public/images/carousel/13.jpg",
+      "public/images/carousel/14.jpg",
+      "public/images/carousel/15.jpg",
+      "public/images/carousel/16.jpg",
+      "public/images/carousel/17.jpg",
+      "public/images/carousel/18.jpg",
+      "public/images/carousel/19.jpg",
+      "public/images/carousel/20.jpg",
+      "public/images/carousel/21.jpg",
+      "public/images/carousel/22.jpg",
+      "public/images/carousel/23.jpg",
+      "public/images/carousel/24.jpg",
+      "public/images/carousel/25.jpg",
+      "public/images/carousel/26.jpg",
+      "public/images/carousel/27.jpg",
+      "public/images/carousel/28.jpg",
+      "public/images/carousel/29.jpg",
+      "public/images/carousel/30.jpg",
+      "public/images/carousel/31.jpg",
+      "public/images/carousel/32.jpg",
+      "public/images/carousel/33.jpg",
+      "public/images/carousel/34.jpg",
+      "public/images/carousel/35.jpg",
+      "public/images/carousel/36.jpg",
+      "public/images/carousel/37.jpg",
+      "public/images/carousel/38.jpg",
+      "public/images/carousel/39.jpg",
+      "public/images/carousel/40.jpg"
+    ];
+
+    const modal = document.getElementById('photo-carousel-modal');
+    const slidesContainer = modal.querySelector('.carousel-slides');
+    const closeBtn = modal.querySelector('.carousel-close');
+    const prevBtn = modal.querySelector('.carousel-prev');
+    const nextBtn = modal.querySelector('.carousel-next');
+    const backdrop = modal.querySelector('.carousel-backdrop');
+
+    let currentIndex = 0;
+
+    function initCarousel() {
+      slidesContainer.innerHTML = '';
+      
+      photoGalleryImages.forEach((src, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide';
+        slide.innerHTML = `<img src="${src}" alt="Photo ${index + 1}">`;
+        slidesContainer.appendChild(slide);
+      });
+
+      updateCarousel();
+    }
+
+    function updateCarousel() {
+      const slides = modal.querySelectorAll('.carousel-slide');
+      
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    function goToSlide(index) {
+      currentIndex = index;
+      updateCarousel();
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % photoGalleryImages.length;
+      updateCarousel();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + photoGalleryImages.length) % photoGalleryImages.length;
+      updateCarousel();
+    }
+
+    function openCarousel() {
+      initCarousel();
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCarousel() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    const viewMoreBtn = document.querySelector('[data-node-id="LDQpB9hwOH"]');
+    if (viewMoreBtn) {
+      viewMoreBtn.style.cursor = 'pointer';
+      viewMoreBtn.addEventListener('click', openCarousel);
+    }
+
+    closeBtn.addEventListener('click', closeCarousel);
+    backdrop.addEventListener('click', closeCarousel);
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') closeCarousel();
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
+    });
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const carouselWrapper = modal.querySelector('.carousel-wrapper');
+    carouselWrapper.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    carouselWrapper.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    }
+  </script>
+  <style>
+    .carousel-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-modal.open {
+      display: flex;
+    }
+    .carousel-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+    }
+    .carousel-container {
+      position: relative;
+      width: 90vw;
+      max-width: 1200px;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 0;
+    }
+    .carousel-close {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      border: none;
+      color: #000;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+      z-index: 1000000;
+    }
+    .carousel-close:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .carousel-close::after {
+      content: '\2715';
+      font-size: 18px;
+      line-height: 1;
+    }
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      border: none;
+      color: #000;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .carousel-nav:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .carousel-prev { left: -60px; }
+    .carousel-next { right: -60px; }
+    @media (max-width: 768px) {
+      .carousel-container {
+        width: 100vw;
+        height: 70vh;
+        padding: 40px 10px 20px;
+      }
+      .carousel-prev {
+        left: 10px;
+      }
+      .carousel-next {
+        right: 10px;
+      }
+      .carousel-nav {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+      }
+    }
+    .carousel-wrapper {
+      width: 100%;
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+    }
+    .carousel-slides {
+      display: flex;
+      height: 100%;
+      transition: transform 0.3s ease;
+    }
+    .carousel-slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-slide.active {
+      display: flex;
+    }
+    .carousel-slide img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+  </style>
+</body>
+<savior-host
+    style="all: unset; position: absolute; top: 0; left: 0; z-index: 99999999999999; display: block !important; overflow: unset">
+</savior-host>
+
+</html>
